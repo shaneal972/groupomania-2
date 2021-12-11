@@ -2,18 +2,32 @@
 
 const faker = require('faker');
 const db = require('../models/index');
+const Users = require('../models/user');
 const sequelize = require('sequelize');
 
 const { QueryTypes } = require('sequelize');
-const users = db.sequelize.query("SELECT * FROM `users`", { type: QueryTypes.SELECT })
-  .then(() => {
-    console.log(users);
-  })
+
+
+
+async function getUsersId() {
+    try {
+      const result = await db.sequelize.query(`SELECT id FROM users`);
+      [result, metadata] = data;
+      console.log(metadata);
+      return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const ids = await getUsersId();
+
+console.log('result', result);
 
 
 
 
-const posts = [...Array(100)].map((post) => ({
+const posts = [...Array(20)].map((post) => ({
   content: faker.lorem.text(),
   created_at: faker.date.recent()
 }));
