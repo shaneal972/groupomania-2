@@ -1,24 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/icon-above-font300.png">
-    <HelloWorld msg="Bienvenue sur votre RSE "/>
+    <Home />
+  <!-- <div>
+    <Signup />
+  </div> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Home from './components/Home.vue';
+// import Signup from './components/Signup.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Home,
+    // Signup
+  },
+  data () {
+    return {
+      
+    }
+  },
+  methods: {
+    
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+// @import "~@/assets/scss/vendors/bootstrap-vue/index";
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

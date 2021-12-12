@@ -5,35 +5,24 @@ const User = require('../models/user');
 
 
 exports.signup = (req, res, next) => {
+    console.log('body', req.body);
     //Hashage du mot de passe
-    bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            const user = new User({
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                email: req.body.email,
-                password: hash
-            });
-            //Ajout de l'utilisateur dans la bdd
-            User.create(user).then(
-                () => {
-                    res.status(201).json({
-                        message: 'Utilisateur crée !' });
-                }).catch(
-                    (error) => {
-                        res.status(400).json({
-                            error : error.message
-                        });
-                    }
-                );
-        })
-        .catch(
-            (error) => {
-                res.status(500).json({
-                    error : error
-                });
-            }
-        );
+     bcrypt
+    .hash(req.body.password, 10)
+         .then((hash) => {
+        console.log('hash', hash);
+      User.create({
+          email: req.body.email,
+          firstname: req.body.firstname,
+          lastname: req.body.name,
+          password: hash,
+        // roleId: 1,
+      })
+        .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
+        .catch((error) => res.status(400).json({ error }));
+    })
+    .catch((error) => res.status(500).json({ error }));
+
 }
 
 exports.login = (req, res, next) => {
