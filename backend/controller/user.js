@@ -1,28 +1,28 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { sequelize } = require('../models');
 
-const User = require('../models/user');
+// const db = require('../models');
+
+// const User = sequelize.users;
+const User = require('../models').User;
 
 
-exports.signup = (req, res, next) => {
+exports.signup = async (req, res, next) => {
     console.log('body', req.body);
     //Hashage du mot de passe
-     bcrypt
-    .hash(req.body.password, 10)
-         .then((hash) => {
-        console.log('hash', hash);
-      User.create({
-          email: req.body.email,
-          firstname: req.body.firstname,
-          lastname: req.body.name,
-          password: hash,
-        // roleId: 1,
-      })
-        .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-        .catch((error) => res.status(400).json({ error }));
-    })
-    .catch((error) => res.status(500).json({ error }));
-
+    const hash = await bcrypt.hash(req.body.password, 10);
+    console.log('hash', hash);
+    let infoUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: hash,
+        connected: req.body.connected,
+    };
+    console.log('utilisateur', infoUser);
+    const user = await User.create(infoUser);
+    res.status(200).send(user);
+    console.log('id', user.id);
 }
 
 exports.login = (req, res, next) => {

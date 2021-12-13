@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     };
   };
   User.init({
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
+    name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     connected: DataTypes.BOOLEAN
@@ -28,5 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+
   return User;
 };

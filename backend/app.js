@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 
 // Création de l'application express
@@ -17,7 +18,10 @@ const commentRoutes = require('./routes/comment');
 
 //Connection à la base de donnée Mysql
 
+
+// Mes middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,8 +31,8 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/api/auth', userRoutes);
-app.use('/api', postRoutes);
-app.use('/api', commentRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
 
 module.exports = app;
