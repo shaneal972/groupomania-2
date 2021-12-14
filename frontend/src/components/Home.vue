@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <header>
+    <header class="row mt-2 pb-2">
       <img alt="Groupomania logo" src="../assets/icon-above-font300.png">
     </header>
-    <main>
+    <main class="row flex-column">
       <h1>Le forum de notre entreprise</h1>
       <p>Soyez les bienvenue votre <span>RSE</span></p>
       <p>
@@ -24,12 +24,14 @@
           <input type="button" class="form-control btn-login" id="btn-submit" value="Se connecter">
         </div>
       </form>
-      <p class="p-signup">
-        Pas de compte ? 
-        <span>
-          <a @click="$router.push('/signup')">S'inscrire</a>
-        </span>
-      </p>
+      <div class="row mt-3">
+        <p class="p-signup">
+          Pas de compte ? 
+          <span>
+            <a @click="$router.push('/signup')">S'inscrire</a>
+          </span>
+        </p>
+      </div>
     </main>
     <router-view></router-view>
   </div>
@@ -50,82 +52,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-@media  screen and (max-width: 576px) {
-  .container{
-    width: 375px;
-    margin: auto 0;
-    padding: 0;
-  }
+<style scoped lang="scss" src="./connexion.scss">
 
-  header {
-    padding-bottom: 20px;
-  }
-
-  main {
-    background: #FAE0DE;
-    // height: 300px;
-    padding-bottom: 10px;
-    height: 100vh;
-
-    .p-signup {
-      margin-top: 20px;
-      span {
-        font-weight: 800;
-        a {
-          color: #FC2F07;
-          text-decoration: none;
-        }
-      }
-    }
-
-    h1 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      padding-top: 10px;
-      color: #000;
-    }
-  }
-
-
-  p {
-    font-size: 0.9rem;
-    text-align: center;
-    margin-bottom: 0;
-  }
-
-  p span {
-    color: #FC2F07;
-  }
-
-  hr {
-    width: 70%;
-    border: 1px dashed black;
-    margin-left: 55px;
-    margin-top: 20px;
-  }
-
-  form {
-    margin: 0 auto;
-    .btn-login {
-      background: #FC2F07;
-      color: #FAE0DE;
-      font-size: 1.4rem;
-    }
-  }
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-// a {
-//   color: #42b983;
-// }
 </style>
