@@ -1,35 +1,20 @@
 <template>
   <div id="app">
-    <Home />
-  <!-- <div>
-    <Signup />
-  </div> -->
+    <!-- <Home /> -->
+    <div>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue';
-// import Signup from './components/Signup.vue';
-
 export default {
   name: 'App',
-  components: {
-    Home,
-    // Signup
-  },
-  data () {
-    return {
-      
-    }
-  },
-  methods: {
-    
-  }
 }
 </script>
 
 <style lang="scss">
-// @import "~@/assets/scss/vendors/bootstrap-vue/index";
+
 *{
   margin: 0;
   padding: 0;

@@ -24,7 +24,12 @@
           <input type="button" class="form-control btn-login" id="btn-submit" value="S'inscrire">
         </div>
       </form>
-      <p class="p-signup">Vous avez un compte ? <span>Se connecter</span></p>
+      <p class="p-signup">
+        Vous avez un compte ? 
+        <span>
+          <a @click="$router.push('/')">Se connecter</a>
+        </span>
+      </p>
     </main>
   </div>
 </template>

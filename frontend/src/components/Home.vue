@@ -24,8 +24,14 @@
           <input type="button" class="form-control btn-login" id="btn-submit" value="Se connecter">
         </div>
       </form>
-      <p class="p-signup">Pas de compte ? <span><a href="#" @click="getSignup">S'inscrire</a></span></p>
+      <p class="p-signup">
+        Pas de compte ? 
+        <span>
+          <a @click="$router.push('/signup')">S'inscrire</a>
+        </span>
+      </p>
     </main>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -49,8 +55,6 @@ export default {
   .container{
     width: 375px;
     margin: auto 0;
-    // margin-left: 0;
-    // margin-right: 0;
     padding: 0;
   }
 
