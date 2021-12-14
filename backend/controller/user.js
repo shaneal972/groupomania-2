@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sequelize } = require('../models');
+const { Op } = require('sequelize');
 
 // const db = require('../models');
 
@@ -25,27 +26,29 @@ exports.signup = async (req, res, next) => {
     console.log('id', user.id);
 }
 
-exports.login = (req, res, next) => {
-    User.findOne({ where: { email: req.body.email } })
-        .then(user => {
-            
-            if (!user) {
-                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-            }
-            bcrypt.compare(req.body.password, user.password)
-                .then(valid => {
-                    if (!valid) {
-                        return res.status(401).json({ error: 'Mot de passe incorrect !' });
-                    }
-                    res.status(200).json({
-                        userId: user.id,
-                        token: jwt.sign(
-                            {id: user.id},
-                            {email: user.email},
-                            {expiresIn: '24h'}
-                        )
-                    });
-                })
-        })
-        .catch(error => res.status(500).json({error}))  
+exports.login = async (req, res, next) => {
+    const user = await User.findOne({
+        where: {
+            email: req.body.email
+        }
+    });
+    if (!user) {
+        return res.status(401).send({
+            error: 'Utilisateur non trouvé !'
+        });
+    }
+    const valid = bcrypt.compareSync(req.body.password, user.password);
+    if (!valid) {
+        return res.status(401).send({
+            accessToken: null,
+            error: 'Mot de passe incorrect !'
+        });
+    }
+    let token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: 86400 });
+    res.status(200).send({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        accessToken: token
+    });
 }
