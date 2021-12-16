@@ -1,0 +1,106 @@
+
+
+header {
+  height: 100px;
+  .logo {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+main {
+  background: #FAE0DE;
+  padding-bottom: 10px;
+  height: 84vh;
+
+  .p-signup {
+    span {
+      font-weight: 800;
+      a {
+        color: #FC2F07;
+        text-decoration: none;
+      }
+    }
+  }
+
+  h1 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    color: #000;
+  }
+}
+
+/* SECTION */
+.header {
+  h1 {
+    font-size: 1.5rem;
+    padding: 10px 0;
+  }
+
+  .break {
+    width: 75%;
+    height: 1px;
+    background: url('../tiret.png');
+  }
+}
+
+.shan-btn {
+  background: #FC2F07;
+  color: #FAE0DE;
+  font-size: 1.1rem;
+  width: 45%;
+  border-radius: 5px;
+  padding: 6px;
+  box-shadow: 0 4px 4px 0 rgba(#000000, 0.25);
+}
+
+.shan-fz {
+  font-size: 0.65rem;
+}
+
+.body{
+  .card-date {
+    margin: 0;
+    color: #6c757d;
+  }
+
+  .shan-pt::after {
+    content: "...";
+  }
+}
+
+form {
+  margin: 0 auto;
+  .btn-login {
+    background: #FC2F07;
+    color: #FAE0DE;
+    font-size: 1.4rem;
+  }
+}
+
+.main {
+  background: #FAE0DE;
+  padding-bottom: 10px;
+  height: auto;
+}
+
+@media screen  and (min-width: 768px){
+  header {
+    height: 300px;
+    .logo {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+@media screen  and (min-width: 1240px){
+  header {
+  height: 400px;
+  .logo {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+}

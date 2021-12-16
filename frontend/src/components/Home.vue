@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <header class="row mt-2 pb-2">
-      <img alt="Groupomania logo" src="../assets/icon-above-font300.png">
+    <header class="row mt-2 pb-2 justify-content-center">
+      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header>
     <main class="row flex-column">
       <h1>Le forum de notre entreprise</h1>
@@ -44,14 +44,11 @@ export default {
     
   }),
   methods: {
-    // getSignup() {
-    //     this.signup = true;
-    // }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss" src="./connexion.scss">
-
+<style scoped lang="scss" src="../assets/scss/connexion.scss">
+  
 </style>
