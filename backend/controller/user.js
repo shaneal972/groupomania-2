@@ -13,14 +13,12 @@ exports.signup = async (req, res, next) => {
     console.log('body', req.body);
     //Hashage du mot de passe
     const hash = await bcrypt.hash(req.body.password, 10);
-    console.log('hash', hash);
     let infoUser = {
         name: req.body.name,
         email: req.body.email,
         password: hash,
         connected: req.body.connected,
     };
-    console.log('utilisateur', infoUser);
     const user = await User.create(infoUser);
     res.status(200).send(user);
     console.log('id', user.id);

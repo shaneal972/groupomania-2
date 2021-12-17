@@ -1,4 +1,8 @@
 
+.btn-disabled {
+  background: rgb(141, 140, 140) !important;
+}
+
 
 header {
   height: 100px;
@@ -53,6 +57,17 @@ main {
   border-radius: 5px;
   padding: 6px;
   box-shadow: 0 4px 4px 0 rgba(#000000, 0.25);
+
+  &-warning {
+    background: #ffc107;
+    width: 45%;
+  }
+
+  &-danger {
+    width: 45%;
+    background: #dc3545;
+    color: #fff;
+  }
 }
 
 .shan-fz {
@@ -67,6 +82,12 @@ main {
 
   .shan-pt::after {
     content: "...";
+  }
+
+  .card-footer {
+    .post-btn {
+      font-size: 0.8rem;
+    }
   }
 }
 

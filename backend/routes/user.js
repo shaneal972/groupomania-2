@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 router.post('/signup', userController.signup);
-router.post('/', userController.login);
+router.post('/login', userController.login);
 // router.get('/users/:id/comments', commentController.getCommentsUser);
 
 

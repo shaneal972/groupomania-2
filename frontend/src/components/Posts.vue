@@ -17,8 +17,16 @@
             <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : John DOE</h6>
             <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ post.createdAt }}</p>
             <p class="card-text text-start shan-pt">{{ post.content.substring(0, 150) }}</p>
-            <a href="#" class="card-link">Voter</a>
-            <a href="#" class="card-link">Commenter</a>
+            <div class="d-flex justify-content-evenly">
+              <a href="#" class="card-link position-relative" title="Voter">
+                <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">5</span>
+              </a>
+              <a href="#" class="card-link position-relative" title="Commenter">
+                <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">3</span>
+              </a>
+            </div>
           </div>
           <div class="card-footer">
             <button class="btn shan-btn mb-2 mt-2" @click="$router.push('/posts/:id')">Lire L'article</button>
