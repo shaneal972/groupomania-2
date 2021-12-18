@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       });
       Post.hasMany(models.Comment)
     }
-  };
+  }
   Post.init({
-    content: DataTypes.STRING,
-    created_at: DataTypes.DATE
+    title: DataTypes.STRING,
+    content: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Post',

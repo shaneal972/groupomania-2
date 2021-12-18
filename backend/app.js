@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/api/users', userRoutes);
-app.use('/api/posts', postRoutes);
-app.use('/api/comments', commentRoutes);
+app.use('/api', userRoutes);
+app.use('/api', postRoutes);
+app.use('/api', commentRoutes);
 
 module.exports = app;

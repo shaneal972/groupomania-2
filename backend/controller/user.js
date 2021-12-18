@@ -1,7 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { sequelize } = require('../models');
-const { Op } = require('sequelize');
 
 // const db = require('../models');
 

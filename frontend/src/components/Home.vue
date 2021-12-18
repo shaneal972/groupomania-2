@@ -2,6 +2,7 @@
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
       <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <nav></nav>
     </header>
     <main class="row flex-column">
       <h1>Le forum de notre entreprise</h1>
@@ -57,8 +58,7 @@ export default {
     },
   },
   methods: {
-    login: function() {
-    }
+    
   }
 }
 </script>
