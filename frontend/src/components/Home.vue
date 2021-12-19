@@ -1,69 +1,69 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
-      <nav></nav>
-    </header>
-    <main class="row flex-column">
-      <h1>Le forum de notre entreprise</h1>
-      <p>Soyez les bienvenue votre <span>RSE</span></p>
-      <p>
-        Nous vous encourageons à laisser vos messages sur notre forum, 
-        afin de développer la <strong>cohésion</strong> 
-      </p>
-      <hr>
-      <form action="" class="w-75">
-        <div class="input-group mb-1">
-          <label for="email" class="form-label"></label>
-          <input type="email" class="form-control" v-model="email" placeholder="Email" required>
+      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    </header>
+    <div class="main row justify-content-center pt-2">
+      <section class="header row justify-content-center">
+        <h1 class="fw-bolder">Notre forum - Groupomania</h1>
+        <div class="break mb-2"></div>
+        <button class="btn shan-btn mb-4 mt-3" v-if="logged">Ajouter un article</button>
+        <nav class="d-flex w-75 justify-content-evenly" v-else>
+          <router-link to="login" class="nav-link shan-bg">Se connecter</router-link>
+          <router-link to="signup" class="nav-link shan-bg">S'inscrire</router-link>
+        </nav>
+        <div class="break mb-5 mt-2"></div>
+      </section>
+      <section class="body">
+        <div class="card mb-5" v-for="post in posts" :key="post.id">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : John DOE</h6>
+            <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ post.createdAt }}</p>
+            <p class="card-text text-start shan-pt">{{ post.content.substring(0, 150) }}</p>
+            <div class="d-flex justify-content-evenly">
+              <a href="#" class="card-link position-relative" title="Voter">
+                <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">5</span>
+              </a>
+              <a href="#" class="card-link position-relative" title="Commenter">
+                <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">3</span>
+              </a>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn shan-btn mb-2 mt-2" @click="$router.push(`/posts/${post.id - 1}`)">Lire L'article</button>
+          </div>
         </div>
-        <div class="input-group mt-4 mb-3">
-          <label for="password" class="form-label"></label>
-          <input type="password" class="form-control" v-model="password" placeholder="Password" required>
-        </div>
-        <div class="input-group">
-          <input @click="login()" type="submit" class="form-control btn-login" :class="{'btn-disabled': !validFields}" id="btn-submit" value="Se connecter">
-        </div>
-      </form>
-      <div class="row mt-3">
-        <p class="p-signup">
-          Pas de compte ? 
-          <span>
-            <a @click="$router.push('/signup')">S'inscrire</a>
-          </span>
-        </p>
-      </div>
-    </main>
-    <router-view></router-view>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
+import postsJSON from '@/utils/posts.json';
 
 export default {
-  name: 'Home',
-  data () {
-    return {
-      email: '',
-      password: ''
-    }
-  },
-  computed: {
-    validFields: function () {
-      if (this.email != "" && this.password != "") {
-        return true;
-      } else {
-        return false;
-      }
+    name: 'Home',
+    data () {
+        return {
+            posts: [],
+            logged: false,
+        }
     },
-  },
-  methods: {
-    
-  }
+    mounted () {
+      this.getPosts();
+    },
+    methods: {
+      async getPosts() {
+        this.posts = postsJSON;
+      },
+      
+    }
+
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss" src="../assets/scss/connexion.scss">
+<style lang="scss" src="../assets/scss/connexion.scss">
   
 </style>

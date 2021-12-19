@@ -1,7 +1,7 @@
 <template>
  <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header>
     <main class="row flex-column">
       <div>
@@ -34,7 +34,7 @@
         <p class="p-signup">
           Vous avez un compte ? 
           <span>
-            <a @click="$router.push('/')">Se connecter</a>
+            <a @click="$router.push('/login')">Se connecter</a>
           </span>
         </p>
       </div>

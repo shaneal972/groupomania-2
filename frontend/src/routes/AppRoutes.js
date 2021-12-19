@@ -9,6 +9,11 @@ let router = new VueRouter({
         {
             path: '/',
             component: require('../components/Home.vue').default,
+            name: 'posts'
+        },
+        {
+            path: '/login',
+            component: require('../components/Login.vue').default,
             name: 'login'
         },
         {
@@ -17,13 +22,9 @@ let router = new VueRouter({
             name: 'signup'
         },
         {
-            path: '/posts',
-            component: require('../components/Posts.vue').default,
-            name: 'posts'
-        },
-        {
             path: '/posts/:id',
             component: require('../components/ReadPost.vue').default,
+            props: true,
             name: 'read-post'
         },
     ]

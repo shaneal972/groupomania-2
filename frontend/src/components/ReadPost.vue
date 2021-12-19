@@ -30,8 +30,8 @@
             </div>
           </div>
           <div class="d-flex justify-content-between card-footer">
-            <button class="btn shan-btn-warning mb-2 mt-2 post-btn" @click="$router.push('/posts/:id')">Modifier</button>
-            <button class="btn shan-btn-danger mb-2 mt-2 post-btn" @click="$router.push('/posts/:id')">Supprimer</button>
+            <button class="btn shan-btn-warning mb-2 mt-2 post-btn" @click="$router.push(`/posts/${post.id}`)">Modifier</button>
+            <button class="btn shan-btn-danger mb-2 mt-2 post-btn" @click="$router.push(`/posts/${post.id}`)">Supprimer</button>
           </div>
         </article>
       </section>
@@ -45,17 +45,19 @@ import postsJSON from '@/utils/posts.json';
 export default {
     name: "ReadPost",
     data () {
-        return {
-            post: {}
-        }
+      return {
+        post: {},
+        id: 0
+      }
     },
     mounted () {
-        this.getPost();
+      this.getPost();
     },
     methods: {
-        getPost() {
-            this.post = postsJSON[0];
-        }
+      getPost() {
+        this.id = this.$route.params.id
+        this.post = postsJSON[this.id];
+      }
     }
 }
 </script>

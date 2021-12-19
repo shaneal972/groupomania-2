@@ -3,7 +3,10 @@
       "id": 1,
       "title": "Titre du post 1",
       "content": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a vulputate tortor. Morbi ullamcorper, est eu pulvinar convallis, urna risus ullamcorper elit, at maximus nulla urna vel sem. Morbi nunc massa, efficitur sit amet lorem quis, feugiat ultrices ligula. Morbi vel pharetra quam. Nam ac mi tincidunt, egestas sem vel, auctor nisl. Suspendisse fringilla arcu vel ante facilisis, eu lacinia dui egestas. Curabitur cursus dolor et ante interdum, vehicula lobortis elit sagittis. Nullam facilisis porttitor sodales. Integer sit amet scelerisque ante. Duis vehicula arcu nisl, vel vehicula ex tempor in. Donec commodo pharetra massa, ac consectetur quam. Sed euismod bibendum lectus quis gravida.",
-      "createdAt": "21/12/2021"
+      "createdAt": "21/12/2021",
+      "userId":{
+         "id": 1
+      }
    },
    {
       "id": 2,
