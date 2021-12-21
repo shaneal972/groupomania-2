@@ -12,7 +12,9 @@ exports.getPosts = async (req, res, next) => {
     }
 };
 
-exports.createPost = {};
+exports.createPost = async (req, res, next) => {
+    
+};
 exports.getOnePost = {};
 exports.updatePost = {};
 exports.deletePost = {};

@@ -24,8 +24,12 @@ let router = new VueRouter({
         {
             path: '/posts/:id',
             component: require('../components/ReadPost.vue').default,
-            props: true,
             name: 'read-post'
+        },
+        {
+            path: '/posts',
+            component: require('../components/CreatePost.vue').default,
+            name: 'create-post'
         },
     ]
 });

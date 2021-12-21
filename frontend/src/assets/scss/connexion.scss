@@ -53,10 +53,9 @@ main {
   background: #FC2F07;
   color: #FAE0DE;
   font-size: 1.1rem;
-  width: 45%;
-  border-radius: 5px;
+  width: 45%;  
   padding: 6px;
-  box-shadow: 0 4px 4px 0 rgba(#000000, 0.25);
+  // box-shadow: 0 4px 4px 0 rgba(#000000, 0.25);
 
   &-warning {
     background: #ffc107;
@@ -70,13 +69,31 @@ main {
   }
 }
 
+.comment {
+  text-decoration: none;
+}
+
 .shan-fz {
   font-size: 0.65rem;
+}
+
+.fz-9 {
+  font-size: 0.985rem;
+}
+
+.shan-btn, .shan-bg {
+  box-shadow: 0 4px 4px 0 rgba(#FC2F07, 0.25);
+  border-radius: 5px;
 }
 
 .shan-bg {
   background-color: #FC2F07 !important;
   color: #FAE0DE;
+  font-size: 0.975rem;
+}
+
+.shan-area {
+  height: 200px !important;
 }
 
 // .shan-text-dark {
@@ -127,10 +144,10 @@ form {
 
 @media screen  and (min-width: 1240px){
   header {
-  height: 400px;
-  .logo {
-    height: 100%;
-    object-fit: cover;
+    height: 400px;
+    .logo {
+      height: 100%;
+      object-fit: cover;
+    }
   }
-}
 }

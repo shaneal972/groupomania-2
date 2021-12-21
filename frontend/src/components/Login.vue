@@ -29,7 +29,7 @@
         <p class="p-signup">
           Pas de compte ? 
           <span>
-            <a @click="$router.push('/signup')">S'inscrire</a>
+            <a @click.prevent="$router.push('/signup')">S'inscrire</a>
           </span>
         </p>
       </div>
