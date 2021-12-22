@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // const db = require('../models');
 
 // const User = sequelize.users;
-// const User = require('../models').User;
+const User = require('../models/user.js');
 
 
 exports.signup = async (req, res, next) => {

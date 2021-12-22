@@ -3,7 +3,7 @@
     <header class="row mt-2 pb-2 justify-content-center">
       <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
     </header><!-- Fin du header -->
-    <div class="main row pt-2">
+    <div class="main row pt-2 col-md-8 offset-md-2">
         <p class="text-start fz-9">
             Vous avez quelque chose à partager pour enrichir et animer notre forum. <br>
             Alors faîtes-le en remplissant tous les champs de ce formulaire.
@@ -18,7 +18,7 @@
                 <label for="content">Contenu de l'article</label>
             </div>
             <div class="input-group">
-          <input @click="login()" type="submit" class="form-control btn-login" id="btn-submit" value="Créer l'article">
+          <input @click="$router.push('/posts')" type="submit" class="form-control btn-login" id="btn-submit" value="Créer l'article">
         </div>
         </form><!-- Fin de form -->
     </div><!-- Fin du main -->
@@ -27,7 +27,19 @@
 
 <script>
 export default {
-    name: 'CreatePost'
+    name: 'CreatePost',
+    data() {
+      return {
+        title: '',
+        content: '',
+        userId: null
+      }
+    },
+    methods: {
+      createPost: () => {
+
+      }
+    }
 }
 </script>
 
