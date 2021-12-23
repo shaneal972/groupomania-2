@@ -9,5 +9,4 @@ router.get('/users/:id', commentController.getCommentsUser);
 router.get('/', commentController.getComments);
 
 
-
 module.exports = router;
