@@ -3,6 +3,7 @@
     <header class="row mt-2 pb-2 justify-content-center">
       <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
     </header><!-- Fin du header -->
+    <p>{{ this.$api.USER_SIGNUP }}</p>
     <div class="main row pt-2 col-md-8 offset-md-2">
         <p class="text-start fz-9">
             Vous avez quelque chose à partager pour enrichir et animer notre forum. <br>
@@ -18,7 +19,7 @@
                 <label for="content">Contenu de l'article</label>
             </div>
             <div class="input-group">
-          <input @click="$router.push('/posts')" type="submit" class="form-control btn-login" id="btn-submit" value="Créer l'article">
+          <input @click="$router.push('/posts/create')" type="submit" class="form-control btn-login" id="btn-submit" value="Créer l'article">
         </div>
         </form><!-- Fin de form -->
     </div><!-- Fin du main -->
@@ -26,23 +27,29 @@
 </template>
 
 <script>
-export default {
-    name: 'CreatePost',
-    data() {
-      return {
-        title: '',
-        content: '',
-        userId: null
-      }
-    },
-    methods: {
-      createPost: () => {
 
-      }
+export default {
+  
+  name: 'CreatePost',
+  data() {
+    return {
+      title: '',
+      content: '',
+      userId: null
     }
+  },
+  mounted() {
+    return createPost()
+  },
+  methods: {
+    createPost: () => {
+
+    },
+    
+  }
 }
 </script>
 
-<style>
-
+<style lang="scss" src="../assets/scss/connexion.scss">
+  
 </style>

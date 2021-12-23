@@ -6,7 +6,12 @@ const jwt = require('jsonwebtoken');
 // const User = sequelize.users;
 const User = require('../models/user.js');
 
-
+/**
+ * Permet de créer un compte à un utilisateur
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {*} next 
+ */
 exports.signup = async (req, res, next) => {
     console.log('body', req.body);
     //Hashage du mot de passe
@@ -22,6 +27,13 @@ exports.signup = async (req, res, next) => {
     console.log('id', user.id);
 }
 
+/**
+ * Permet de connecter un utilisateur
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {*} next 
+ * @returns 
+ */
 exports.login = async (req, res, next) => {
     const user = await User.findOne({
         where: {

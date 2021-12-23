@@ -23,15 +23,13 @@ exports.createPost = async (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
     const userId = req.body.userId;
-    const createdAt = new Date();
-    const updatedAt = new Date();
 
     //Insertion dans la base de donnée
     const id = await models.Post.create({ title, content, userId, createdAt, updatedAt });
     if (!id) {
-        res.send("Utilisateur non crée !");
+        res.send("Post n'a pas pu être crée !");
     } else {
-        res.status(201).json("Utilsateur crée avec succès !");
+        res.status(201).json("Post crée avec succès !");
     }
 };
 
@@ -108,6 +106,8 @@ exports.deletePost = async (req, res, next) => {
         console.log(postDelete);
         if (postDelete) {
             res.status(200).send("Post supprimé avec succès !");
+        } else {
+            res.status(404).send("Ce post n'existe pas dans la bdd")
         }
     } catch (error) {
         res.status(400).json({ error: error.message });
