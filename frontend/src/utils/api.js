@@ -7,7 +7,7 @@ export const api = {
     USER_SIGNUP: URL_API + "users/signup",
     
     // Post
-    POST_CREATE: URL_API + "posts/create",
+    POST_CREATE: URL_API + "posts/create/:idUser",
     POST_GET_ONE: URL_API + `posts/:id`,
     POST_UPDATE: URL_API + `posts/:id`,
     POST_DELETE: URL_API + `posts/:id`,

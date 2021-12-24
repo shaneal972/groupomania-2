@@ -13,7 +13,7 @@
         </p>
       </div>
       <hr>
-        <form action="" class="w-75">
+        <form action="/login" class="w-75">
           <div class="input-group mb-1">
             <label for="name" class="form-label"></label>
             <input type="text" class="form-control" id="name" placeholder="Name : John Doe" required>
@@ -27,7 +27,7 @@
             <input type="password" class="form-control" id="password" placeholder="Password" required>
           </div>
           <div class="input-group">
-            <input type="button" class="form-control btn-login" id="btn-submit" value="S'inscrire">
+            <input type="submit" class="form-control btn-login" id="btn-submit" value="S'inscrire">
           </div>
         </form>
       <div class="row mt-3">
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Signup',
   data() {
@@ -53,6 +55,16 @@ export default {
     }
   },
   methods: {
+    signup(){
+      axios.post(this.$api.USER_SIGNUP, 
+      {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+      },
+      
+      );
+    }
   }
 }
 </script>

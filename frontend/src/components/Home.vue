@@ -8,7 +8,7 @@
         <h1 class="fw-bolder mb-0">Notre forum - Groupomania</h1>
         <div class="break mb-2"></div>
         <nav class="d-flex justify-content-evenly mb-2 mt-2" >
-          <router-link :to="{name:'create-post'}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link :to="{name:'create-post', params:{idUser: 1}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
         </nav>
         <nav class="d-flex w-100 justify-content-evenly" >
           <router-link :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
@@ -17,16 +17,17 @@
         <div class="break mb-5 mt-2"></div>
       </section>
       <section class="body">
-        <div class="card mb-5" v-for="post in posts" :key="post.id">
+        <div class="card mb-5" v-for="post in posts.posts" :key="post.id">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : John DOE</h6>
-            <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ post.createdAt }}</p>
-            <p class="card-text text-start shan-pt">{{ post.content.substring(0, 150) }}</p>
+            <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : {{post.User.name}}</h6>
+            <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ post.createdAt || date }}</p>
+            <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300) }}</p>
             <div class="d-flex justify-content-evenly">
-              <a href="#" class="card-link position-relative" title="Voter">
+              <a href="#" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Voter">
                 <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
-                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">5</span>
+                <span class="position-absolute top-0 start-0 translate-middle badge bg-info">5</span>
+                Voter
               </a>
               <a href="/posts" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
@@ -45,7 +46,9 @@
 </template>
 
 <script>
-import postsJSON from '@/utils/posts.json';
+// import postsJSON from '@/utils/posts.json';
+import axios from 'axios';
+
 
 export default {
     name: 'Home',
@@ -53,6 +56,7 @@ export default {
         return {
             posts: [],
             logged: false,
+            error: false
         }
     },
     mounted () {
@@ -60,9 +64,9 @@ export default {
     },
     methods: {
       async getPosts() {
-        this.posts = postsJSON;
+        const posts = await axios.get(this.$api.POST_GET_ALL);
+        this.posts = posts.data;
       },
-      
     }
 
 }

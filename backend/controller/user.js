@@ -1,10 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// const db = require('../models');
-
-// const User = sequelize.users;
-const User = require('../models/user.js');
+const models = require('../models/index');
 
 /**
  * Permet de créer un compte à un utilisateur
@@ -22,7 +19,7 @@ exports.signup = async (req, res, next) => {
         password: hash,
         connected: req.body.connected,
     };
-    const user = await User.create(infoUser);
+    const user = await models.User.create(infoUser);
     res.status(200).send(user);
     console.log('id', user.id);
 }
@@ -35,7 +32,7 @@ exports.signup = async (req, res, next) => {
  * @returns 
  */
 exports.login = async (req, res, next) => {
-    const user = await User.findOne({
+    const user = await models.User.findOne({
         where: {
             email: req.body.email
         }

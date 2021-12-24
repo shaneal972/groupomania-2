@@ -1,15 +1,16 @@
+
 const models = require('../models/index');
 
 /**
  * Permet de récupérer tous les posts
  */
 exports.getPosts = async (req, res, next) => {
-    const posts = await models.Post.findAll();
-    if (posts.length > 0) {
-        res.status(200).send(posts);
-    } else {
-        res.send('Pas de posts dans la bdd');
-    }
+    const posts = await models.Post.findAll({
+        include: [{
+            model: models.User,
+        }]
+    });
+    res.status(200).send({ posts });
 };
 
 /**
@@ -25,7 +26,7 @@ exports.createPost = async (req, res, next) => {
     const userId = req.body.userId;
 
     //Insertion dans la base de donnée
-    const id = await models.Post.create({ title, content, userId, createdAt, updatedAt });
+    const id = await models.Post.create({ title, content, userId });
     if (!id) {
         res.send("Post n'a pas pu être crée !");
     } else {
