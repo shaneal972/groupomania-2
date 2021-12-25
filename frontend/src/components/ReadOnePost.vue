@@ -15,7 +15,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <p class="card-subtitle mb-1 text-muted shan-fz">Posté le : {{ post.createdAt }}</p>
-                <h6 class="card-subtitle mb-1 text-muted shan-fz">Ecrit par : John DOE</h6>
+                <h6 class="card-subtitle mb-1 text-muted shan-fz">Ecrit par : {{ this.name }}</h6>
             </div>
             <p class="card-text text-start mt-3">{{ post.content }}</p>
             <div class="d-flex justify-content-evenly">
@@ -40,23 +40,27 @@
 </template>
 
 <script>
-import postsJSON from '@/utils/posts.json';
+// import postsJSON from '@/utils/posts.json';
+import axios from 'axios';
 
 export default {
-    name: "ReadPost",
+    name: "ReadOnePost",
     data () {
       return {
         post: {},
-        id: 0
+        id: 0,
+        name: ''
       }
     },
     mounted () {
       this.getPost();
     },
     methods: {
-      getPost() {
+      async getPost() {
         this.id = this.$route.params.id
-        this.post = postsJSON[this.id];
+        const result = await axios.get(this.$api.POST_GET_ONE, { params: { id: this.id } });
+        this.post = result.data.post;
+        this.name =  result.data.user.name;
       }
     }
 }

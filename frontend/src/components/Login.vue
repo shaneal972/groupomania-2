@@ -12,7 +12,7 @@
         afin de développer la <strong>cohésion</strong> 
       </p>
       <hr>
-      <form action="" class="w-75">
+      <form @submit.prevent="login" class="w-75">
         <div class="input-group mb-1">
           <label for="email" class="form-label"></label>
           <input type="email" class="form-control" v-model="email" placeholder="Email" required>
@@ -22,7 +22,7 @@
           <input type="password" class="form-control" v-model="password" placeholder="Password" required>
         </div>
         <div class="input-group">
-          <input @click="login()" type="submit" class="form-control btn-login" :class="{'btn-disabled': !validFields}" id="btn-submit" value="Se connecter">
+          <input type="submit" class="form-control btn-login" :class="{'btn-disabled': !validFields}" id="btn-submit" value="Se connecter">
         </div>
       </form>
       <div class="row mt-3">
@@ -49,6 +49,9 @@ export default {
       password: '',
     }
   },
+  mounted () {
+    this.login()
+  },
   computed: {
     validFields: function () {
       if (this.email != "" && this.password != "") {
@@ -59,7 +62,11 @@ export default {
     },
   },
   methods: {
-    
+    login () {
+      const email = this.email;
+      const password = this.password;
+      console.log(email, password);
+    }
   }
 }
 </script>

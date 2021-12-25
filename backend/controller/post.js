@@ -1,4 +1,4 @@
-
+const dbQuery = require('../utils/query')
 const models = require('../models/index');
 
 /**
@@ -42,7 +42,7 @@ exports.createPost = async (req, res, next) => {
  */
 exports.getOnePost = async (req, res, next) => {
     // Récupération de l'id depuis l'url
-    const id = req.params.id;
+    const id = req.query.id;
     // Récupération du post dans la bdd
     const result = await models.Post.findAll({
         where: {
@@ -53,7 +53,9 @@ exports.getOnePost = async (req, res, next) => {
     if (!result) {
         res.status(400).json("Le post n'a pas été trouvé !");
     } else {
-        res.status(200).send(result[0]);
+        const idUser = result[0].userId;
+        const user = await dbQuery.getNameOfUserById(idUser);
+        res.status(200).send({post: result[0], user: user});
     }
 };
 

@@ -22,7 +22,7 @@
             <h5 class="card-title">{{ post.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : {{post.User.name}}</h6>
             <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ post.createdAt || date }}</p>
-            <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300) }}</p>
+            <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300)  }}</p>
             <div class="d-flex justify-content-evenly">
               <a href="#" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Voter">
                 <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
@@ -51,6 +51,7 @@ import axios from 'axios';
 
 
 export default {
+    
     name: 'Home',
     data () {
         return {

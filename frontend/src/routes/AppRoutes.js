@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import ReadOnePost from "../components/ReadOnePost.vue";
 
 Vue.use(VueRouter);
 
@@ -23,7 +24,7 @@ let router = new VueRouter({
         },
         {
             path: '/posts/:id',
-            component: require('../components/ReadPost.vue').default,
+            component: ReadOnePost,
             name: 'read-post'
         },
         {
