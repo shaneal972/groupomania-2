@@ -10,7 +10,7 @@
         </p>
         <form @submit.prevent="createPost">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" v-model="title" placeholder="Titre">
+                <input type="text" class="form-control" v-model="title" id="title" placeholder="Titre">
                 <label for="title">Titre de l'article</label>
             </div>
             <div class="form-floating mb-4">

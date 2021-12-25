@@ -12,60 +12,66 @@
         afin de développer la <strong>cohésion</strong> 
       </p>
       <hr>
-      <form @submit.prevent="login" class="w-75">
+      <form @submit.prevent="connectUser()" class="w-75">
         <div class="input-group mb-1">
-          <label for="email" class="form-label"></label>
-          <input type="email" class="form-control" v-model="email" placeholder="Email" required>
+          <label for="mail" class="form-label"></label>
+          <input type="email" class="form-control" v-model="mail" id="mail" placeholder="Email" required>
         </div>
         <div class="input-group mt-4 mb-3">
           <label for="password" class="form-label"></label>
-          <input type="password" class="form-control" v-model="password" placeholder="Password" required>
+          <input type="password" class="form-control" v-model="password" id="password" placeholder="Password" required>
         </div>
         <div class="input-group">
-          <input type="submit" class="form-control btn-login" :class="{'btn-disabled': !validFields}" id="btn-submit" value="Se connecter">
+          <input type="submit" class="form-control btn-login"  id="btn-submit" value="Se connecter">
         </div>
       </form>
       <div class="row mt-3">
         <p class="p-signup">
           Pas de compte ? 
           <span>
-            <a @click.prevent="$router.push('/signup')">S'inscrire</a>
+            <a @click.prevent="$router.push('/users/signup')">S'inscrire</a>
           </span>
         </p>
       </div>
     </main>
-    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'Login',
   data () {
     return {
-      name: '',
-      email: '',
+      mail: '',
       password: '',
     }
   },
   mounted () {
-    this.login()
+    this.connectUser()
   },
   computed: {
-    validFields: function () {
-      if (this.email != "" && this.password != "") {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    // validFields: function () {
+    //   if (this.email != "" && this.password != "") {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // },
   },
   methods: {
-    login () {
-      const email = this.email;
-      const password = this.password;
-      console.log(email, password);
+    async connectUser () {
+      console.log(this.mail);
+      // Envoi des informations au backend avec axios 
+      await axios.get(
+        this.$api.USER_LOGIN, 
+        {
+          mail: this.mail,
+          password: this.password
+        },
+        { headers: {'Content-Type': 'application/json' }}
+      );
     }
   }
 }

@@ -1,4 +1,4 @@
-const dbQuery = require('../utils/query')
+const dbQuery = require('../utils/query');
 const models = require('../models/index');
 
 /**
@@ -10,7 +10,7 @@ exports.getPosts = async (req, res, next) => {
             model: models.User,
         }]
     });
-    res.status(200).send({ posts });
+    res.status(200).send({ posts })
 };
 
 /**
@@ -41,7 +41,7 @@ exports.createPost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.getOnePost = async (req, res, next) => {
-    // Récupération de l'id depuis l'url
+    // Récupération de l'id 
     const id = req.query.id;
     // Récupération du post dans la bdd
     const result = await models.Post.findAll({

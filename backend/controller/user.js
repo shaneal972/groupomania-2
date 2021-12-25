@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { Op } = require("sequelize");
 
 const models = require('../models/index');
+
 
 /**
  * Permet de créer un compte à un utilisateur
@@ -32,28 +34,38 @@ exports.signup = async (req, res, next) => {
  * @returns 
  */
 exports.login = async (req, res, next) => {
-    const user = await models.User.findOne({
-        where: {
-            email: req.body.email
+    console.log('body', req)
+    const email = req.body.mail;
+    if (email !== null || email !== '') {
+        console.log('super !');
+        const user = await models.User.findOne({
+            where: {
+                email: {
+                    [Op.eq]: email,
+                }
+            }
+        });
+        console.log('user back',user);
+        if (!user) {
+            return res.status(401).send({
+                error: 'Utilisateur non trouvé !'
+            });
+        };
+        const valid = bcrypt.compareSync(req.body.password, user.password);
+        if (!valid) {
+            return res.status(401).send({
+                accessToken: null,
+                error: 'Mot de passe incorrect !'
+            });
         }
-    });
-    if (!user) {
-        return res.status(401).send({
-            error: 'Utilisateur non trouvé !'
+        let token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: 86400 });
+        res.status(200).send({
+            email: user.email,
+            accessToken: token
         });
+    } else {
+        res.status(500).json("Une erreur inconnue est survenue !")
     }
-    const valid = bcrypt.compareSync(req.body.password, user.password);
-    if (!valid) {
-        return res.status(401).send({
-            accessToken: null,
-            error: 'Mot de passe incorrect !'
-        });
-    }
-    let token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: 86400 });
-    res.status(200).send({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        accessToken: token
-    });
+    
+    
 }

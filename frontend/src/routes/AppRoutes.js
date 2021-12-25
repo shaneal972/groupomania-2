@@ -13,12 +13,13 @@ let router = new VueRouter({
             name: 'posts'
         },
         {
-            path: '/login',
+            path: '/users/login',
             component: require('../components/Login.vue').default,
-            name: 'login'
+            name: 'login',
+            params: {email: '', password: ''}
         },
         {
-            path: '/signup',
+            path: '/users/signup',
             component: require('../components/Signup.vue').default,
             name: 'signup'
         },
@@ -32,6 +33,11 @@ let router = new VueRouter({
             component: require('../components/CreatePost.vue').default,
             name: 'create-post'
         },
+        {
+            path: '/comments/posts/:idPost/users/:idUser',
+            component: require('../components/CreateUserCommentPost.vue').default,
+            name: 'create_comment'
+        }
     ]
 });
 

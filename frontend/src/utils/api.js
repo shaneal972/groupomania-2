@@ -19,4 +19,7 @@ export const api = {
     COMMENT_UPDATE: URL_API + `comments/:id`,
     COMMENT_DELETE: URL_API + `comments/:id`,
     COMMENT_GET_ALL: URL_API + "comments/",
+
+    // Query
+    QUERY_TITLE: URL_API + 'queries/title/'
 }

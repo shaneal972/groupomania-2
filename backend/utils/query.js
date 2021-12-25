@@ -8,4 +8,13 @@ exports.getNameOfUserById = async (idUser) => {
         }
     });
     return user;
+};
+
+exports.getPostTitle = async (idPost) => {
+    const result = await models.Post.findOne({
+        where: {
+            id: idPost
+        }
+    });
+    return result.data.title;
 }

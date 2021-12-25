@@ -1,4 +1,5 @@
 const models = require('../models/index');
+const query = require('../utils/query');
 
 /**
  * Permet de récupérer toutes les commentaires 
@@ -24,9 +25,9 @@ exports.getComments = async (req, res, next) => {
  */
 exports.createUserCommentPost = async (req, res, next) => {
     // Récupération de l'id utilisateur et de l'id du post
-    console.log(req.params);
-    const userId = req.params.idUser;
-    const postId = req.params.idPost;
+    console.log(req.body);
+    const userId = req.body.userId;
+    const postId = req.body.postId;
     // Récupération du message du commentaire
     const message = req.body.message;
     // Vérification des infos reç🇺s

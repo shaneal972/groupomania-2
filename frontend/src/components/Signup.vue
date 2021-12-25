@@ -13,18 +13,18 @@
         </p>
       </div>
       <hr>
-        <form action="/login" class="w-75">
+        <form @submit.prevent="signup" class="w-75">
           <div class="input-group mb-1">
             <label for="name" class="form-label"></label>
-            <input type="text" class="form-control" id="name" placeholder="Name : John Doe" required>
+            <input type="text" class="form-control" id="name" v-model="name" placeholder="Name : John Doe" required>
           </div>
           <div class="input-group mt-4 mb-3">
-            <label for="email" class="form-label"></label>
-            <input type="email" class="form-control" id="email" placeholder="Email" required>
+            <label for="mail" class="form-label"></label>
+            <input type="email" class="form-control" id="mail" v-model="mail" placeholder="Email" required>
           </div>
           <div class="input-group mt-4 mb-3">
             <label for="password" class="form-label"></label>
-            <input type="password" class="form-control" id="password" placeholder="Password" required>
+            <input type="password" class="form-control" id="password" v-model="password" placeholder="Password" required>
           </div>
           <div class="input-group">
             <input type="submit" class="form-control btn-login" id="btn-submit" value="S'inscrire">
@@ -34,7 +34,7 @@
         <p class="p-signup">
           Vous avez un compte ? 
           <span>
-            <a @click="$router.push('/login')">Se connecter</a>
+            <a @click="$router.push('/users/login')">Se connecter</a>
           </span>
         </p>
       </div>
@@ -50,19 +50,18 @@ export default {
   data() {
     return {
       name: '',
-      email: '',
+      mail: '',
       password: ''
     }
   },
   methods: {
-    signup(){
-      axios.post(this.$api.USER_SIGNUP, 
+    async signup(){
+      await axios.post(this.$api.USER_SIGNUP, 
       {
         name: this.name,
-        email: this.email,
-        password: this.password,
+        email: this.mail,
+        password: this.password
       },
-      
       );
     }
   }

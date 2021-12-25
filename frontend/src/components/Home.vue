@@ -29,11 +29,13 @@
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">5</span>
                 Voter
               </a>
-              <a href="/posts" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
+              <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">3</span>
-                Commenter
-              </a>
+                <router-link :to="{name: 'create_comment', params: { idUser: 1, idPost: 2 }}" class="text-opacity-75 text-decoration-none text-dark">
+                  Commenter
+                </router-link>
+              </div>
             </div>
           </div>
           <div class="card-footer">
