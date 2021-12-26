@@ -53,8 +53,8 @@ main {
   background: #FC2F07;
   color: #FAE0DE;
   font-size: 1.1rem;
-  width: 45%;  
-  padding: 6px;
+  // width: 45%;  
+  // padding: 6px;
   // box-shadow: 0 4px 4px 0 rgba(#000000, 0.25);
 
   &-warning {
@@ -90,6 +90,7 @@ main {
   background-color: #FC2F07 !important;
   color: #FAE0DE;
   font-size: 0.975rem;
+  padding: 10px;
 }
 
 .shan-area {

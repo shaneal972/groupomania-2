@@ -18,3 +18,15 @@ exports.getPostTitle = async (idPost) => {
     });
     return result.data.title;
 }
+
+exports.getCountCommentsPost = async (id) => {
+    const comments = await models.Comment.count({
+        col: 'idPost', 
+        where: {
+            idPost: id
+        },
+        raw: true
+    })
+
+    console.log('comments', comments);
+}

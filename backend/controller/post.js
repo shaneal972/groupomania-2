@@ -6,11 +6,16 @@ const models = require('../models/index');
  */
 exports.getPosts = async (req, res, next) => {
     const posts = await models.Post.findAll({
-        include: [{
-            model: models.User,
-        }]
+        include: [
+            {
+                model: models.User,
+            },
+            {
+                model: models.Comment,
+            }
+        ]
     });
-    res.status(200).send({ posts })
+    res.status(200).send({ posts });
 };
 
 /**
@@ -45,6 +50,14 @@ exports.getOnePost = async (req, res, next) => {
     const id = req.query.id;
     // Récupération du post dans la bdd
     const result = await models.Post.findAll({
+        include: [
+            {
+                model: models.Comment,
+                include: [{
+                    model: models.User
+                }]
+            },
+        ],
         where: {
             id: id
         }

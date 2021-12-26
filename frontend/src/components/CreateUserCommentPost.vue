@@ -4,8 +4,9 @@
         <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
       </header><!-- Fin du header -->
       <div class="main row pt-2 col-md-8 offset-md-2">
-        <p class="text-center fs-4">
-            {{ title }}
+        <p class="text-center fs-6">
+            Vsus allez commenter un article de notre forum, soyez poli, 
+            courtois et faîtes attention à l'orthographe.
         </p>
         <form @submit.prevent="createUserComment">
             <div class="form-floating mb-4">
@@ -36,9 +37,9 @@ export default {
       }
     },
     mounted () {
+      this.createUserComment();
       this.getUserId();
       this.getPostId();
-      // this.getPostTitle();
     },
     methods: {
       async createUserComment () {

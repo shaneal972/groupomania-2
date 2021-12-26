@@ -7,10 +7,10 @@
       <section class="header row justify-content-center">
         <h1 class="fw-bolder mb-0">Notre forum - Groupomania</h1>
         <div class="break mb-2"></div>
-        <nav class="d-flex justify-content-evenly mb-2 mt-2" >
+        <!-- <nav class="d-flex justify-content-evenly mb-2 mt-2" >
+        </nav> -->
+        <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
           <router-link :to="{name:'create-post', params:{idUser: 1}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
-        </nav>
-        <nav class="d-flex w-100 justify-content-evenly" >
           <router-link :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
           <router-link :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
         </nav>
@@ -31,8 +31,8 @@
               </a>
               <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
-                <span class="position-absolute top-0 start-0 translate-middle badge bg-info">3</span>
-                <router-link :to="{name: 'create_comment', params: { idUser: 1, idPost: 2 }}" class="text-opacity-75 text-decoration-none text-dark">
+                <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>
+                <router-link :to="{name: 'create_comment', params: { idUser: post.User.id, idPost: post.id }}" class="text-opacity-75 text-decoration-none text-dark">
                   Commenter
                 </router-link>
               </div>
@@ -59,7 +59,8 @@ export default {
         return {
             posts: [],
             logged: false,
-            error: false
+            error: false,
+            nbComments: 0
         }
     },
     mounted () {
@@ -70,6 +71,7 @@ export default {
         const posts = await axios.get(this.$api.POST_GET_ALL);
         this.posts = posts.data;
       },
+      
     }
 
 }
