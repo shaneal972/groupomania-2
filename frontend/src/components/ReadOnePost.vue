@@ -57,7 +57,7 @@
                     <p class="card-text">{{ comment.message }}</p>          
                   </div>
                   <div class="card-footer text-muted">
-                    2 days ago
+                    {{ formatDate(comment.createdAt) }}
                   </div>
                 </div>
               </div>
@@ -72,6 +72,8 @@
 <script>
 // import postsJSON from '@/utils/posts.json';
 import axios from 'axios';
+import dayjs from 'dayjs';
+const relativeTime = require('dayjs/plugin/relativeTime');
 
 export default {
     name: "ReadOnePost",
@@ -80,11 +82,13 @@ export default {
         post: {},
         id: 0,
         name: '',
-        comments: {}
+        comments: {},
+        date: null
       }
     },
     mounted () {
       this.getPost();
+      this.formatDate(this.date);
     },
     methods: {
       async getPost() {
@@ -93,7 +97,12 @@ export default {
         this.post = result.data.post;
         this.name =  result.data.user.name;
         this.comments = this.post.Comments;
+      },
+      formatDate(date){
+        dayjs.extend(relativeTime);
+        return dayjs(date).fromNow();
       }
+            
     }
 }
 </script>

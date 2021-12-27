@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const query = require('./utils/query.js');
+const auth = require('./middleware/auth');
 
 // Création de l'application express
 const app = express();

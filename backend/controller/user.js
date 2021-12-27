@@ -34,10 +34,8 @@ exports.signup = async (req, res, next) => {
  * @returns 
  */
 exports.login = async (req, res, next) => {
-    console.log('body', req)
-    const email = req.body.mail;
+    const email = req.body.email;
     if (email !== null || email !== '') {
-        console.log('super !');
         const user = await models.User.findOne({
             where: {
                 email: {
@@ -45,7 +43,6 @@ exports.login = async (req, res, next) => {
                 }
             }
         });
-        console.log('user back',user);
         if (!user) {
             return res.status(401).send({
                 error: 'Utilisateur non trouvé !'
@@ -66,6 +63,4 @@ exports.login = async (req, res, next) => {
     } else {
         res.status(500).json("Une erreur inconnue est survenue !")
     }
-    
-    
 }

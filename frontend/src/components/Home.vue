@@ -21,7 +21,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : {{post.User.name}}</h6>
-            <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ post.createdAt || date }}</p>
+            <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ formatDate(post.createdAt)  }}</p>
             <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300)  }}</p>
             <div class="d-flex justify-content-evenly">
               <a href="#" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Voter">
@@ -50,6 +50,8 @@
 <script>
 // import postsJSON from '@/utils/posts.json';
 import axios from 'axios';
+import dayjs from 'dayjs';
+// const relativeTime = require('dayjs/plugin/relativeTime');
 
 
 export default {
@@ -60,17 +62,23 @@ export default {
             posts: [],
             logged: false,
             error: false,
-            nbComments: 0
+            nbComments: 0,
+            date: null
         }
     },
     mounted () {
       this.getPosts();
+      this.formatDate(this.date);
     },
     methods: {
       async getPosts() {
         const posts = await axios.get(this.$api.POST_GET_ALL);
         this.posts = posts.data;
       },
+      formatDate(date){
+        // dayjs.extend(relativeTime);
+        return dayjs(date).format('DD/MM/YYYY');
+      }
       
     }
 

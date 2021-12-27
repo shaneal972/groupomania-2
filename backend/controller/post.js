@@ -60,7 +60,10 @@ exports.getOnePost = async (req, res, next) => {
         ],
         where: {
             id: id
-        }
+        },
+        order: [
+            [models.Comment, 'id', 'DESC'],
+        ]
     });
     // Envoie au frontend
     if (!result) {

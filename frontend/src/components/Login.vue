@@ -15,7 +15,7 @@
       <form @submit.prevent="connectUser()" class="w-75">
         <div class="input-group mb-1">
           <label for="mail" class="form-label"></label>
-          <input type="email" class="form-control" v-model="mail" id="mail" placeholder="Email" required>
+          <input type="email" class="form-control" v-model="email" id="email" placeholder="Email" required>
         </div>
         <div class="input-group mt-4 mb-3">
           <label for="password" class="form-label"></label>
@@ -44,7 +44,7 @@ export default {
   name: 'Login',
   data () {
     return {
-      mail: '',
+      email: '',
       password: '',
     }
   },
@@ -62,16 +62,21 @@ export default {
   },
   methods: {
     async connectUser () {
-      console.log(this.mail);
+      console.log(this.email);
+      const url = this.$api.USER_LOGIN;
       // Envoi des informations au backend avec axios 
-      await axios.get(
-        this.$api.USER_LOGIN, 
-        {
-          mail: this.mail,
-          password: this.password
-        },
-        { headers: {'Content-Type': 'application/json' }}
-      );
+      try{
+        await axios.post(
+          url,
+          {
+            email: this.email,
+            password: this.password
+          }
+        );
+        this.$router.push('/');
+      }catch (err) {
+        console.log(err.message);
+      }
     }
   }
 }
