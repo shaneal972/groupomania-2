@@ -10,13 +10,13 @@ let router = new VueRouter({
         {
             path: '/',
             component: require('../components/Home.vue').default,
-            name: 'posts'
+            name: 'posts',
+            params: {userId: 0}
         },
         {
             path: '/users/login',
             component: require('../components/Login.vue').default,
-            name: 'login',
-            params: {email: '', password: ''}
+            name: 'login'
         },
         {
             path: '/users/signup',

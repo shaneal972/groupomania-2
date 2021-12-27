@@ -46,19 +46,12 @@ export default {
     return {
       email: '',
       password: '',
+      logged: false,
+      userId: 0,
     }
   },
   mounted () {
     this.connectUser()
-  },
-  computed: {
-    // validFields: function () {
-    //   if (this.email != "" && this.password != "") {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // },
   },
   methods: {
     async connectUser () {
@@ -66,14 +59,19 @@ export default {
       const url = this.$api.USER_LOGIN;
       // Envoi des informations au backend avec axios 
       try{
-        await axios.post(
+        const response = await axios.post(
           url,
           {
             email: this.email,
             password: this.password
           }
         );
-        this.$router.push('/');
+        const userInfos = await response.data;
+        this.userId = userInfos.id;
+        this.$router.push({
+          path: '/', 
+          query: {id: this.userId}
+        });
       }catch (err) {
         console.log(err.message);
       }

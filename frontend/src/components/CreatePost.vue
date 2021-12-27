@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     async createPost () {
+      console.log(this.userId);
       const title = this.title;
       const content = this.content;
       if (title !== '' && title !== null && content !== '' && content !== null){
@@ -56,6 +57,10 @@ export default {
       }
       this.title = null;
       this.content = null;
+      // this.$router.push({
+      //     path: '/', 
+      //     query: {id: this.userId}
+      //   });
     },
   }
 }

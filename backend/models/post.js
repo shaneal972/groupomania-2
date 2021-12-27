@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE'
       });
       Post.hasMany(models.Comment, {
-        foreignKey: 'userId',
+        foreignKey: 'postId',
       });
     }
   };

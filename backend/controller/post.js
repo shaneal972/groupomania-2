@@ -9,10 +9,12 @@ exports.getPosts = async (req, res, next) => {
         include: [
             {
                 model: models.User,
+                
             },
             {
                 model: models.Comment,
-            }
+                
+            },
         ]
     });
     res.status(200).send({ posts });

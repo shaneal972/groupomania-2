@@ -10,11 +10,12 @@
         <!-- <nav class="d-flex justify-content-evenly mb-2 mt-2" >
         </nav> -->
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
-          <router-link :to="{name:'create-post', params:{idUser: 1}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link v-if="isConnected" :to="{name:'create-post', params:{idUser: this.getUserIdLogged()}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
           <router-link :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
           <router-link :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
         </nav>
         <div class="break mb-5 mt-2"></div>
+        <!-- {{ this.getUserIdLogged() }} -->
       </section>
       <section class="body">
         <div class="card mb-5" v-for="post in posts.posts" :key="post.id">
@@ -39,7 +40,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <router-link class="btn shan-btn mb-2 mt-2" :to="{ name: 'read-post', params: { id: `${post.id}` }}">Lire L'article</router-link>
+            <router-link class="btn shan-btn mb-2 mt-2" :to="{ name: 'read-post', params: { id: post.id }}">Lire L'article</router-link>
           </div>
         </div>
       </section>
@@ -59,25 +60,41 @@ export default {
     name: 'Home',
     data () {
         return {
-            posts: [],
+            posts: {},
             logged: false,
             error: false,
             nbComments: 0,
-            date: null
+            date: null,
+            userId: 0
         }
     },
     mounted () {
       this.getPosts();
       this.formatDate(this.date);
+      this.getUserIdLogged();
+      this.isConnected();
     },
     methods: {
       async getPosts() {
         const posts = await axios.get(this.$api.POST_GET_ALL);
-        this.posts = posts.data;
+        this.posts = await posts.data;
+        console.log(this.posts);
       },
       formatDate(date){
         // dayjs.extend(relativeTime);
         return dayjs(date).format('DD/MM/YYYY');
+      },
+      getUserIdLogged(){        
+        this.userId = this.$route.query.id;
+        return this.userId;
+      },
+      isConnected(){
+        console.log(this.logged);
+        if (this.userId === undefined || this.userId === 0) {
+          this.logged = false;
+        } else {
+          this.loggged = true;
+        }
       }
       
     }
