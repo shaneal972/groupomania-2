@@ -19,11 +19,12 @@ exports.signup = async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: hash,
-        connected: req.body.connected,
     };
     const user = await models.User.create(infoUser);
-    res.status(200).send(user);
-    console.log('id', user.id);
+    res.status(200).json({
+        user,
+        message: 'Utilisateur crée avec succès !'
+    });
 }
 
 /**
@@ -56,10 +57,10 @@ exports.login = async (req, res, next) => {
             });
         }
         let token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: 86400 });
-        res.status(200).send({
+        res.status(200).json({
             id: user.id,
             email: user.email,
-            accessToken: token
+            token: token
         });
     } else {
         res.status(500).json("Une erreur inconnue est survenue !")

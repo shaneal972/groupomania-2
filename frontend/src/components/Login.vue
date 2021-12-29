@@ -48,6 +48,7 @@ export default {
       password: '',
       logged: false,
       userId: 0,
+      token: ''
     }
   },
   mounted () {
@@ -68,10 +69,11 @@ export default {
         );
         const userInfos = await response.data;
         this.userId = userInfos.id;
-        this.$router.push({
-          path: '/', 
-          query: {id: this.userId}
-        });
+        this.token = userInfos.token;
+        // this.$router.push({
+        //   path: '/', 
+        //   query: {userId: this.userId}
+        // });
       }catch (err) {
         console.log(err.message);
       }

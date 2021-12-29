@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const query = require('./utils/query.js');
-const auth = require('./middleware/auth');
 
 // Création de l'application express
 const app = express();
@@ -19,11 +18,11 @@ const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
 const queryRoutes = require('./routes/query');
 
-//Connection à la base de donnée Mysq
+//Connection à la base de donnée Mysql
 
 
 // Mes middleware
-app.use(express.urlencoded({extended: true}));
+// app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use((req, res, next) => {

@@ -10,9 +10,11 @@
         <!-- <nav class="d-flex justify-content-evenly mb-2 mt-2" >
         </nav> -->
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
-          <router-link v-if="isConnected" :to="{name:'create-post', params:{idUser: this.getUserIdLogged()}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
-          <router-link :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
-          <router-link :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
+          <router-link v-if="logged" :to="{name:'create-post', params:{idUser: this.getUserIdLogged()}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link v-if="!logged" :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
+          <router-link v-else :to="{name:'profile'}" class="nav-link shan-bg">Profile</router-link>
+          <router-link v-if="!logged" :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
+          <router-link v-else :to="{name:'posts'}" class="nav-link shan-bg">Se déconnecter</router-link>
         </nav>
         <div class="break mb-5 mt-2"></div>
         <!-- {{ this.getUserIdLogged() }} -->
@@ -39,6 +41,7 @@
               </div>
             </div>
           </div>
+          <!-- <create-user-comment-post /> -->
           <div class="card-footer">
             <router-link class="btn shan-btn mb-2 mt-2" :to="{ name: 'read-post', params: { id: post.id }}">Lire L'article</router-link>
           </div>
@@ -49,15 +52,17 @@
 </template>
 
 <script>
-// import postsJSON from '@/utils/posts.json';
 import axios from 'axios';
 import dayjs from 'dayjs';
-// const relativeTime = require('dayjs/plugin/relativeTime');
+// import CreateUserCommentPost from './CreateUserCommentPost.vue';
 
 
 export default {
     
     name: 'Home',
+    // components: {
+    //   'create-user-comment-post': CreateUserCommentPost
+    // },
     data () {
         return {
             posts: {},
@@ -78,27 +83,18 @@ export default {
       async getPosts() {
         const posts = await axios.get(this.$api.POST_GET_ALL);
         this.posts = await posts.data;
-        console.log(this.posts);
       },
       formatDate(date){
-        // dayjs.extend(relativeTime);
         return dayjs(date).format('DD/MM/YYYY');
       },
       getUserIdLogged(){        
-        this.userId = this.$route.query.id;
+        this.userId = this.$route.query.userId;
         return this.userId;
       },
       isConnected(){
-        console.log(this.logged);
-        if (this.userId === undefined || this.userId === 0) {
-          this.logged = false;
-        } else {
-          this.loggged = true;
-        }
-      }
-      
+        this.getUserIdLogged() ? this.logged = true : this.logged = false;
+      },      
     }
-
 }
 </script>
 
