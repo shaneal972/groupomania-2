@@ -43,16 +43,27 @@ export default {
     },
     methods: {
       async createUserComment () {
+        // Récupération du token du localStorage
+        const token = localStorage.getItem('token');
+        const accessToken = JSON.parse(token);
+
         // Récupérer le message
         const message = this.message;
         // Passer ce message au backend avec axios
         try{
           if (message !== '' && message !== null){
-            await axios.post(this.$api.COMMENT_CREATE, {
-              message: message,
-              userId: this.getUserId(),
-              postId: this.getPostId()
-            });
+            await axios.post(this.$api.COMMENT_CREATE, 
+              {
+                message: message,
+                userId: this.getUserId(),
+                postId: this.getPostId()
+              },
+              {
+                headers: {
+                  Authorization: 'Bearer ' + accessToken,
+                }
+              }
+            );
           } else {
             console.log("Vous devez remplir tous les champs !")
           }

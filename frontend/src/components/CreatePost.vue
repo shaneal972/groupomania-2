@@ -43,15 +43,25 @@ export default {
   },
   methods: {
     async createPost () {
-      console.log(this.userId);
+      // Récupération du token du localStorage
+      const token = localStorage.getItem('token');
+      const accessToken = JSON.parse(token);
+
       const title = this.title;
       const content = this.content;
       if (title !== '' && title !== null && content !== '' && content !== null){
-        await axios.post(this.$api.POST_CREATE, {
-          title: title,
-          content: content,
-          userId: this.userId
-        });
+        await axios.post(this.$api.POST_CREATE, 
+          {
+            title: title,
+            content: content,
+            userId: this.userId
+          },
+          {
+            headers: {
+              Authorization: 'Bearer ' + accessToken,
+            }
+          }
+        );
       } else {
         console.log("Vous devez remplir tous les champs !")
       }

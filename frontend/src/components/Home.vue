@@ -56,9 +56,11 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 // import CreateUserCommentPost from './CreateUserCommentPost.vue';
 
+// const cors = require('cors');
+
 
 export default {
-    
+
     name: 'Home',
     // components: {
     //   'create-user-comment-post': CreateUserCommentPost
@@ -81,7 +83,16 @@ export default {
     },
     methods: {
       async getPosts() {
-        const posts = await axios.get(this.$api.POST_GET_ALL);
+        // Récupération du token du localStorage
+        const token = localStorage.getItem('token');
+        const accessToken = JSON.parse(token);
+        
+        const posts = await axios.get(this.$api.POST_GET_ALL, {
+          // Ajout du header Authorization
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          }
+        });
         this.posts = await posts.data;
       },
       formatDate(date){

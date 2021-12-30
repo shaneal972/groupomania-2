@@ -92,8 +92,18 @@ export default {
     },
     methods: {
       async getPost() {
+        // Récupération du token du localStorage
+        const token = localStorage.getItem('token');
+        const accessToken = JSON.parse(token);
+        
         this.id = this.$route.params.id
-        const result = await axios.get(this.$api.POST_GET_ONE, { params: { id: this.id } });
+        const result = await axios.get(this.$api.POST_GET_ONE, { 
+          params: { id: this.id },
+           // Ajout du header Authorization
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          }
+        });
         this.post = result.data.post;
         this.name =  result.data.user.name;
         this.comments = this.post.Comments;

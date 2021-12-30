@@ -70,14 +70,16 @@ export default {
         const userInfos = await response.data;
         this.userId = userInfos.id;
         this.token = userInfos.token;
-        // this.$router.push({
-        //   path: '/', 
-        //   query: {userId: this.userId}
-        // });
+        localStorage.setItem('token', JSON.stringify(this.token));
+        this.$router.push({
+          path: '/', 
+          query: {userId: this.userId}
+        });
       }catch (err) {
         console.log(err.message);
       }
-    }
+    },
+    
   }
 }
 </script>

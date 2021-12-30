@@ -5,11 +5,15 @@ const state = {
         name: '',
         email: '',
         password: ''
-    }
+    },
+    accessToken: ''
 };
 const getters = {
     user (state) {
         return state.user;
+    },
+    accessToken(state) {
+        return state.accessToken;
     }
 };
 const mutations = {
