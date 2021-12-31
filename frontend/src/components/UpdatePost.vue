@@ -42,15 +42,14 @@ export default {
     this.getPostId();
     this.getToken();
     this.getPost();
-    this.getTitle();
+    // this.getTitle();
     this.updatePost();
   },
   methods: {
     getPost(){
       const accessToken = this.getToken();
-      console.log(accessToken);
       const idPost = this.getPostId();
-      // console.log(idPost);
+
       axios.get(this.$api.POST_GET_ONE, { 
         params: { id: idPost },
           // Ajout du header Authorization
@@ -60,19 +59,18 @@ export default {
       })
       .then((response) => {
         const result = response.data;
-        console.log(result);
+
         this.title = result.post.title;
         this.content = result.post.content;
-        console.table(this.title, this.content)
       })
       .catch((error) => {
         console.log(error.message);
       })
       
     },
-    getTitle(){
-      return this.title;
-    },
+    // getTitle(){
+    //   return this.title;
+    // },
     getPostId(){
       return this.$route.params.id;
     },

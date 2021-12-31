@@ -23,7 +23,9 @@
             <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: {id: `${post.id}`}}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
-            <button class="btn shan-btn-danger mb-2 mt-2 post-btn" @click="$router.push(`/posts/${post.id}`)">Supprimer</button>
+            <router-link class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
+              <button class="btn shan-btn-danger post-btn">Supprimer</button>
+            </router-link>
           </div>
         </article>
         <article>
@@ -80,6 +82,7 @@ export default {
     },
     mounted () {
       this.getPost();
+      // this.deletePost();
       this.formatDate(this.date);
     },
     methods: {
@@ -100,6 +103,29 @@ export default {
         this.name =  result.data.user.name;
         this.comments = this.post.Comments;
       },
+      // deletePost(){
+      //   // Récupération du token du localStorage
+      //   const token = localStorage.getItem('token');
+      //   const accessToken = JSON.parse(token);
+
+      //   this.id = this.$route.params.id;
+        
+      //   console.log(this.id);
+      //   axios.delete(this.$api.POST_DELETE, {
+      //     body: {
+      //       id: this.id,
+      //     },
+      //      // Ajout du header Authorization
+      //     headers: {
+      //       Authorization: 'Bearer ' + accessToken,
+      //     }
+      //   }).then((response) => {
+      //     const deletedId = response.data;
+      //     console.log(deletedId);
+      //   }).catch((error) => {
+      //     console.log(error);
+      //   });
+      // },
       formatDate(date){
         dayjs.extend(relativeTime);
         return dayjs(date).fromNow();

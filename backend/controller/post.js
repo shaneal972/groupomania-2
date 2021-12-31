@@ -92,9 +92,8 @@ exports.getOnePost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.updatePost = async (req, res, next) => {
-    // Récupération de l'id depuis l'url
+    // Récupération de l'id 
     const id = req.body.params.id;
-    console.log('id Post', req.body);
     // Récupération des nouvelles informations du post
     const postToUpdate = {
         title: req.body.data.title,
@@ -125,8 +124,9 @@ exports.updatePost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.deletePost = async (req, res, next) => {
+    console.log(req);
     // Récupération de l'id et après destruction
-    const id = req.params.id;
+    const id = req.body.params.id;
     try {
         const postDelete = await models.Post.destroy({
             where: {
