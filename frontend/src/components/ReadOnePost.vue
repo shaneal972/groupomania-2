@@ -18,19 +18,11 @@
                 <h6 class="card-subtitle mb-1 text-muted shan-fz">Ecrit par : {{ this.name }}</h6>
             </div>
             <p class="card-text text-start mt-3">{{ post.content }}</p>
-            <!-- <div class="d-flex justify-content-evenly">
-              <a href="#" class="card-link position-relative" title="Voter">
-                <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
-                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">5</span>
-              </a>
-              <a href="#" class="card-link position-relative" title="Commenter">
-                <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
-                <span class="position-absolute top-0 start-100 translate-middle badge bg-info">4</span>
-              </a>
-            </div> -->
           </div>
           <div class="d-flex justify-content-between card-footer">
-            <button class="btn shan-btn-warning mb-2 mt-2 post-btn" @click="$router.push(`/posts/${post.id}`)">Modifier</button>
+            <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: {id: `${post.id}`}}">
+              <button class="btn shan-btn-warning post-btn">Modifier</button>
+            </router-link>
             <button class="btn shan-btn-danger mb-2 mt-2 post-btn" @click="$router.push(`/posts/${post.id}`)">Supprimer</button>
           </div>
         </article>
@@ -111,8 +103,7 @@ export default {
       formatDate(date){
         dayjs.extend(relativeTime);
         return dayjs(date).fromNow();
-      }
-            
+      }   
     }
 }
 </script>

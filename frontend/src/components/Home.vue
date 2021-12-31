@@ -26,12 +26,12 @@
             <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : {{post.User.name}}</h6>
             <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ formatDate(post.createdAt)  }}</p>
             <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300)  }}</p>
-            <div class="d-flex justify-content-evenly">
-              <a href="#" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Voter">
+            <div class="d-flex justify-content-end w-75">
+              <!-- <a href="#" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Voter">
                 <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">5</span>
                 Voter
-              </a>
+              </a> -->
               <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>

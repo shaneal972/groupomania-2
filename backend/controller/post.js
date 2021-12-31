@@ -15,6 +15,9 @@ exports.getPosts = async (req, res, next) => {
                 model: models.Comment,
                 
             },
+        ],
+        order: [
+            ['id', 'DESC'],
         ]
     });
     res.status(200).send({ posts });
@@ -48,8 +51,13 @@ exports.createPost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.getOnePost = async (req, res, next) => {
+    let id = null;
     // Récupération de l'id 
-    const id = req.query.id;
+    if (req.query) {
+        id = req.query.id;
+    } else {
+        id = req.body.id;
+    }
     // Récupération du post dans la bdd
     const result = await models.Post.findAll({
         include: [
@@ -73,7 +81,7 @@ exports.getOnePost = async (req, res, next) => {
     } else {
         const idUser = result[0].userId;
         const user = await dbQuery.getNameOfUserById(idUser);
-        res.status(200).send({post: result[0], user: user});
+        res.status(200).json({post: result[0], user: user});
     }
 };
 
@@ -85,11 +93,12 @@ exports.getOnePost = async (req, res, next) => {
  */
 exports.updatePost = async (req, res, next) => {
     // Récupération de l'id depuis l'url
-    const id = req.params.id;
+    const id = req.body.params.id;
+    console.log('id Post', req.body);
     // Récupération des nouvelles informations du post
     const postToUpdate = {
-        title: req.body.title,
-        content: req.body.content
+        title: req.body.data.title,
+        content: req.body.data.content
     }
     // Vérification que le post est dans la bdd, 
     const post = await models.Post.findAll({ where: { id: id } });

@@ -35,20 +35,29 @@ export default {
     return {
       title: '',
       content: '',
-      userId: this.$route.params.idUser
+      userId: this.$route.params.idUser,
+      action: ''
     }
   },
   mounted() {
     this.createPost();
+    this.getToken();
   },
   methods: {
-    async createPost () {
+    getToken() {
       // Récupération du token du localStorage
       const token = localStorage.getItem('token');
       const accessToken = JSON.parse(token);
 
+      return accessToken;
+    },
+    async createPost () {
+      
+      const accessToken = this.getToken();
+
       const title = this.title;
       const content = this.content;
+      
       if (title !== '' && title !== null && content !== '' && content !== null){
         await axios.post(this.$api.POST_CREATE, 
           {

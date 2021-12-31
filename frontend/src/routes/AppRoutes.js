@@ -34,6 +34,11 @@ let router = new VueRouter({
             name: 'read-post'
         },
         {
+            path: '/posts/:id',
+            component: require('../components/UpdatePost.vue').default,
+            name: 'update-post'
+        },
+        {
             path: '/posts/create/:idUser',
             component: require('../components/CreatePost.vue').default,
             name: 'create-post'
