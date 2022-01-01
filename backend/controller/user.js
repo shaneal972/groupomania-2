@@ -59,6 +59,7 @@ exports.login = async (req, res, next) => {
         let token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: 86400 });
         res.status(200).json({
             id: user.id,
+            name: user.name,
             email: user.email,
             token: token
         });

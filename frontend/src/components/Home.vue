@@ -10,17 +10,21 @@
         <!-- <nav class="d-flex justify-content-evenly mb-2 mt-2" >
         </nav> -->
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
-          <router-link v-if="logged" :to="{name:'create-post', params:{idUser: this.getUserIdLogged()}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link v-if="logged" :to="{name:'create-post', params:{idUser: getUser.id}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
           <router-link v-if="!logged" :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
           <router-link v-else :to="{name:'profile'}" class="nav-link shan-bg">Profile</router-link>
           <router-link v-if="!logged" :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
           <router-link v-else :to="{name:'posts'}" class="nav-link shan-bg">Se déconnecter</router-link>
         </nav>
-        <div class="break mb-5 mt-2"></div>
-        <!-- {{ this.getUserIdLogged() }} -->
+        <div class="break mb-3 mt-2"></div>
+          <p>
+            Bienvenue {{ getUser.name }} 
+            <img v-if="role == 'moderator'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="32" height="32">
+          </p>
+        <div class="break mb-5"></div>
       </section>
       <section class="body">
-        <div class="card mb-5" v-for="post in posts.posts" :key="post.id">
+        <div class="card mb-5" v-for="post in posts" :key="post.id">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted shan-fz">Ecrit par : {{post.User.name}}</h6>
@@ -54,7 +58,7 @@
 <script>
 import axios from 'axios';
 import dayjs from 'dayjs';
-// import CreateUserCommentPost from './CreateUserCommentPost.vue';
+import Vuex from 'vuex';
 
 // const cors = require('cors');
 
@@ -72,7 +76,10 @@ export default {
             error: false,
             nbComments: 0,
             date: null,
-            userId: 0
+            userId: 0,
+            userName: null,
+            role: null,
+            token: null
         }
     },
     mounted () {
@@ -81,19 +88,38 @@ export default {
       this.getUserIdLogged();
       this.isConnected();
     },
+    created(){
+      this.$store.getters.getUser;
+    },
     methods: {
-      async getPosts() {
-        // Récupération du token du localStorage
+      ...Vuex.mapActions([
+        'getInfosUser',
+        'getRoleUser',
+        'addToken'
+      ]),
+      getPosts() {
+        console.log('token', this.$store.getters.getAccessToken);
+        // Récupération du token depuis le store 
         const token = localStorage.getItem('token');
         const accessToken = JSON.parse(token);
         
-        const posts = await axios.get(this.$api.POST_GET_ALL, {
+        axios.get(this.$api.POST_GET_ALL, {
           // Ajout du header Authorization
           headers: {
             Authorization: 'Bearer ' + accessToken,
           }
-        });
-        this.posts = await posts.data;
+        })
+        .then((response) => {
+          this.posts = response.data.posts;
+          this.posts.forEach(post => {
+            if(post.User.id == this.$route.query.userId){
+              const user = post.User;
+              // this.$store.dispatch('getInfosUser', user);
+              console.log(user);
+            }
+          })
+        })
+        .catch((error) => {console.log(error)});
       },
       formatDate(date){
         return dayjs(date).format('DD/MM/YYYY');
@@ -104,7 +130,13 @@ export default {
       },
       isConnected(){
         this.getUserIdLogged() ? this.logged = true : this.logged = false;
-      },      
+      }
+    },
+    computed: {
+      ...Vuex.mapGetters([
+        'getAccessToken',
+        'getUser'
+      ]),
     }
 }
 </script>

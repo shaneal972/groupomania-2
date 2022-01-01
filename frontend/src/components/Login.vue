@@ -39,6 +39,7 @@
 
 <script>
 import axios from 'axios';
+import Vuex from 'vuex';
 
 export default {
   name: 'Login',
@@ -48,38 +49,55 @@ export default {
       password: '',
       logged: false,
       userId: 0,
-      token: ''
+      token: '',
+      userInfos: null
     }
   },
   mounted () {
-    this.connectUser()
+    // this.connectUser()
   },
   methods: {
     async connectUser () {
       console.log(this.email);
       const url = this.$api.USER_LOGIN;
       // Envoi des informations au backend avec axios 
-      try{
-        const response = await axios.post(
+      axios.post(
           url,
           {
             email: this.email,
             password: this.password
           }
-        );
-        const userInfos = await response.data;
-        this.userId = userInfos.id;
-        this.token = userInfos.token;
-        localStorage.setItem('token', JSON.stringify(this.token));
+      )
+      .then((response) => {
+        this.userInfos = response.data;
+        console.log('infosUser', this.userInfos);
+        this.userId = this.userInfos.id;
+        this.token = this.userInfos.token;
+        console.log(this.token);
         this.$router.push({
           path: '/', 
           query: {userId: this.userId}
         });
-      }catch (err) {
-        console.log(err.message);
-      }
+      })
+        //localStorage.setItem('token', JSON.stringify(this.token));
+        // Ajout du token dans le store 
+        this.$store.dispatch('addToken', this.token);
+        // Ajout des infos user dans le store 
+        this.$store.dispatch('getInfosUser', this.userInfos);
+
     },
     
+  },
+  computed: {
+    ...Vuex.mapGetters([
+      'getUserName',
+      'getAccessToken'
+    ]),
+    ...Vuex.mapActions([
+      'getInfosUser',
+      'getRoleUser',
+      'addToken'
+    ])
   }
 }
 </script>
