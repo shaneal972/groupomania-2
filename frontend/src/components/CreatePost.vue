@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
+      <img @click="$router.push({name: 'posts', query:{userId: `${getUser.id}`}})" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
     </header><!-- Fin du header -->
     <div class="main row pt-2 col-md-8 offset-md-2">
         <p class="text-start fz-9">
@@ -27,6 +27,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   
@@ -81,6 +82,17 @@ export default {
       //     query: {id: this.userId}
       //   });
     },
+  },
+  computed: {
+    ...mapActions([
+        'getInfosUser',
+        'getRoleUser',
+        'addToken'
+      ]),
+      ...mapGetters([
+        'getAccessToken',
+        'getUser'
+      ]),
   }
 }
 </script>

@@ -73,7 +73,7 @@ export default {
         console.log('infosUser', this.userInfos);
         this.userId = this.userInfos.id;
         this.token = this.userInfos.token;
-        console.log(this.token);
+        console.log('token', this.token);
         this.$router.push({
           path: '/', 
           query: {userId: this.userId}
@@ -96,7 +96,8 @@ export default {
     ...Vuex.mapActions([
       'getInfosUser',
       'getRoleUser',
-      'addToken'
+      'addToken',
+      'logout'
     ])
   }
 }

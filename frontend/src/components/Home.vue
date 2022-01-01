@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
+      <img @click="$router.push({name: 'posts', query:{userId: `${getUser.id}`}})" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
@@ -10,16 +10,16 @@
         <!-- <nav class="d-flex justify-content-evenly mb-2 mt-2" >
         </nav> -->
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
-          <router-link v-if="logged" :to="{name:'create-post', params:{idUser: getUser.id}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link v-if="logged" :to="{name:'create-post', params:{idUser: `${getUser.id}`}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
           <router-link v-if="!logged" :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
           <router-link v-else :to="{name:'profile'}" class="nav-link shan-bg">Profile</router-link>
           <router-link v-if="!logged" :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
-          <router-link v-else :to="{name:'posts'}" class="nav-link shan-bg">Se déconnecter</router-link>
+          <button v-else type="submit" class="btn shan-bg" @click="logout()">Se déconnecter</button> 
         </nav>
         <div class="break mb-3 mt-2"></div>
           <p>
             Bienvenue {{ getUser.name }} 
-            <img v-if="role == 'moderator'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="32" height="32">
+            <img v-if="role == 'moderator'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
           </p>
         <div class="break mb-5"></div>
       </section>
@@ -31,11 +31,6 @@
             <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ formatDate(post.createdAt)  }}</p>
             <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300)  }}</p>
             <div class="d-flex justify-content-end w-75">
-              <!-- <a href="#" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Voter">
-                <img src="../assets/up-2.png" width="24" height="24" alt="Icône pour voter">
-                <span class="position-absolute top-0 start-0 translate-middle badge bg-info">5</span>
-                Voter
-              </a> -->
               <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>
@@ -58,7 +53,7 @@
 <script>
 import axios from 'axios';
 import dayjs from 'dayjs';
-import Vuex from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // const cors = require('cors');
 
@@ -72,33 +67,28 @@ export default {
     data () {
         return {
             posts: {},
+            user: null,
             logged: false,
             error: false,
             nbComments: 0,
             date: null,
             userId: 0,
             userName: null,
-            role: null,
+            role: '',
             token: null
         }
+    },
+    created(){
+      this.getInfosUser;
     },
     mounted () {
       this.getPosts();
       this.formatDate(this.date);
-      this.getUserIdLogged();
       this.isConnected();
     },
-    created(){
-      this.$store.getters.getUser;
-    },
     methods: {
-      ...Vuex.mapActions([
-        'getInfosUser',
-        'getRoleUser',
-        'addToken'
-      ]),
+      
       getPosts() {
-        console.log('token', this.$store.getters.getAccessToken);
         // Récupération du token depuis le store 
         const token = localStorage.getItem('token');
         const accessToken = JSON.parse(token);
@@ -113,11 +103,10 @@ export default {
           this.posts = response.data.posts;
           this.posts.forEach(post => {
             if(post.User.id == this.$route.query.userId){
-              const user = post.User;
-              // this.$store.dispatch('getInfosUser', user);
-              console.log(user);
+              this.user = post.User;
             }
           })
+        this.$store.dispatch('getInfosUser', this.user);
         })
         .catch((error) => {console.log(error)});
       },
@@ -130,10 +119,21 @@ export default {
       },
       isConnected(){
         this.getUserIdLogged() ? this.logged = true : this.logged = false;
+      },
+      logout(){
+        this.$store.dispatch('logout');
+        this.$router.push('/', {
+          refresh: true,
+        });
       }
     },
     computed: {
-      ...Vuex.mapGetters([
+      ...mapActions([
+        'getInfosUser',
+        'getRoleUser',
+        'addToken'
+      ]),
+      ...mapGetters([
         'getAccessToken',
         'getUser'
       ]),

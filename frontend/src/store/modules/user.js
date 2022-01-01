@@ -25,6 +25,9 @@ const mutations = {
     },
     ADD_TOKEN(state, payload) {
         state.accessToken = payload;
+    },
+    LOGOUT_USER(state) {
+        state.user = null;
     }
 
 };
@@ -37,6 +40,9 @@ const actions = {
     },
     addToken({ commit }, token) {
         commit('ADD_TOKEN', token)
+    },
+    logout({ commit }) {
+        commit('LOGOUT_USER')
     }
 };
 

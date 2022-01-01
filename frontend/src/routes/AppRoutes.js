@@ -11,7 +11,6 @@ let router = new VueRouter({
             path: '/',
             component: require('../components/Home.vue').default,
             name: 'posts',
-            // params: {userId: 0}
         },
         {
             path: '/users/login',

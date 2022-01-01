@@ -9,6 +9,7 @@ exports.getPosts = async (req, res, next) => {
         include: [
             {
                 model: models.User,
+                group: ['id']
                 
             },
             {
