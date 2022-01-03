@@ -12,7 +12,10 @@ export default new Vuex.Store({
       return state.accessToken;
     },
     getRole(state) {
-      return state.user.role.libelle
+      return state.user.role.libelle;
+    },
+    getUserId(state){
+      return state.user.id;
     }
   },
   mutations: {
@@ -34,12 +37,12 @@ export default new Vuex.Store({
     addUser({ commit }, userInfos) {
       commit('ADD_USER', userInfos);
     },
-    getRoleUser( {commit}, userRole) {
-      commit('SET_ROLE', userRole)
-    },
-    getToken( {commit}, token) {
-      commit('SET_TOKEN', token)
-    },
+    // setRoleUser( {commit}, userRole) {
+    //   commit('SET_ROLE', userRole)
+    // },
+    // setToken( {commit}, token) {
+    //   commit('SET_TOKEN', token)
+    // },
     logout({ commit }) {
       commit('DEL_USER');
     }

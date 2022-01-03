@@ -23,7 +23,7 @@
             <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: {id: `${post.id}`}}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
-            <router-link v-if="role === 'moderateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
+            <router-link v-if="getRole() === 'moderateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
               <button class="btn shan-btn-danger post-btn">Supprimer</button>
             </router-link>
           </div>
@@ -133,9 +133,11 @@ export default {
         dayjs.extend(relativeTime);
         return dayjs(date).fromNow();
       },
-      role(){
-        return this.$store.getters.getRole;
-      }
+      getRole(){
+        if(this.$store.state.user.id){
+          return this.$store.getters.getRole;
+        }
+      },
     },
   computed: {
 

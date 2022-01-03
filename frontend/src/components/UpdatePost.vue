@@ -76,10 +76,8 @@ export default {
     },
     getToken() {
       // Récupération du token du localStorage
-      const token = localStorage.getItem('token');
-      const accessToken = JSON.parse(token);
-
-      return accessToken;
+      const user = localStorage.getItem('authUser');
+      return JSON.parse(user).user.token;
     },
     async updatePost() {
       const id = this.getPostId();
@@ -103,11 +101,16 @@ export default {
       }
       this.title = null;
       this.content = null;
-      // this.$router.push({
-      //     path: '/', 
-      //     query: {id: this.userId}
-      //   });
+      await this.$router.push({
+        path: '/',
+        query: {id: this.getUserId}
+      });
     },
+  },
+  computed: {
+    getUserId(){
+      return this.$store.getters.getUserId;
+    }
   }
 }
 </script>
