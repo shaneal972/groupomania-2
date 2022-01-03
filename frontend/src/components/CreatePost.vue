@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img @click="$router.push({name: 'posts', query:{userId: `${getUser.id}`}})" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
+      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header><!-- Fin du header -->
     <div class="main row pt-2 col-md-8 offset-md-2">
         <p class="text-start fz-9">
@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters, mapActions } from 'vuex';
+// import { mapGetters, mapActions } from 'vuex';
 
 export default {
   
@@ -36,21 +36,19 @@ export default {
     return {
       title: '',
       content: '',
-      userId: this.$route.params.idUser,
+      user: null,
       action: ''
     }
   },
   mounted() {
-    this.createPost();
+    // this.createPost();
     this.getToken();
   },
   methods: {
     getToken() {
       // Récupération du token du localStorage
-      const token = localStorage.getItem('token');
-      const accessToken = JSON.parse(token);
-
-      return accessToken;
+      this.user = localStorage.getItem('authUser');
+      return JSON.parse(this.user).user.token;
     },
     async createPost () {
       
@@ -64,7 +62,7 @@ export default {
           {
             title: title,
             content: content,
-            userId: this.userId
+            userId: this.$route.params.idUser
           },
           {
             headers: {
@@ -84,15 +82,15 @@ export default {
     },
   },
   computed: {
-    ...mapActions([
-        'getInfosUser',
-        'getRoleUser',
-        'addToken'
-      ]),
-      ...mapGetters([
-        'getAccessToken',
-        'getUser'
-      ]),
+    // ...mapActions([
+    //     'getInfosUser',
+    //     'getRoleUser',
+    //     'addToken'
+    //   ]),
+    //   ...mapGetters([
+    //     'getAccessToken',
+    //     'getUser'
+    //   ]),
   }
 }
 </script>

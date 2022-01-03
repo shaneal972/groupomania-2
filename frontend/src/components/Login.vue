@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
       <nav></nav>
     </header>
     <main class="row flex-column">
@@ -12,9 +12,10 @@
         afin de développer la <strong>cohésion</strong> 
       </p>
       <hr>
-      <form @submit.prevent="connectUser()" class="w-75">
+      <div v-if="error" class="error">{{ this.error }}</div>
+      <form @submit.prevent="login()" class="w-75">
         <div class="input-group mb-1">
-          <label for="mail" class="form-label"></label>
+          <label for="email" class="form-label"></label>
           <input type="email" class="form-control" v-model="email" id="email" placeholder="Email" required>
         </div>
         <div class="input-group mt-4 mb-3">
@@ -39,26 +40,22 @@
 
 <script>
 import axios from 'axios';
-import Vuex from 'vuex';
 
 export default {
   name: 'Login',
-  data () {
+  data() {
     return {
-      email: '',
-      password: '',
-      logged: false,
+      email: null,
+      password: null,
       userId: 0,
-      token: '',
-      userInfos: null
+      token: null,
+      userInfos: null,
+      role: null,
+      error: null
     }
   },
-  mounted () {
-    // this.connectUser()
-  },
   methods: {
-    async connectUser () {
-      console.log(this.email);
+    login() {
       const url = this.$api.USER_LOGIN;
       // Envoi des informations au backend avec axios 
       axios.post(
@@ -70,36 +67,21 @@ export default {
       )
       .then((response) => {
         this.userInfos = response.data;
-        console.log('infosUser', this.userInfos);
+        console.log(this.userInfos);
         this.userId = this.userInfos.id;
-        this.token = this.userInfos.token;
-        console.log('token', this.token);
+        localStorage.setItem('authUser', JSON.stringify({user: this.userInfos}));
+        // Ajout des infos user dans le store
+        this.$store.dispatch('addUser', this.userInfos);
         this.$router.push({
           path: '/', 
-          query: {userId: this.userId}
+          query: {userId: this.userId.toString()}
         });
       })
-        //localStorage.setItem('token', JSON.stringify(this.token));
-        // Ajout du token dans le store 
-        this.$store.dispatch('addToken', this.token);
-        // Ajout des infos user dans le store 
-        this.$store.dispatch('getInfosUser', this.userInfos);
-
+      .catch((error) => {
+        this.error = error;
+      })
     },
-    
   },
-  computed: {
-    ...Vuex.mapGetters([
-      'getUserName',
-      'getAccessToken'
-    ]),
-    ...Vuex.mapActions([
-      'getInfosUser',
-      'getRoleUser',
-      'addToken',
-      'logout'
-    ])
-  }
 }
 </script>
 

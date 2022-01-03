@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img @click="$router.push({name: 'posts', query:{userId: `${getUser.id}`}})" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">    
+      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
@@ -10,16 +10,16 @@
         <!-- <nav class="d-flex justify-content-evenly mb-2 mt-2" >
         </nav> -->
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
-          <router-link v-if="logged" :to="{name:'create-post', params:{idUser: `${getUser.id}`}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
-          <router-link v-if="!logged" :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
-          <router-link v-else :to="{name:'profile'}" class="nav-link shan-bg">Profile</router-link>
-          <router-link v-if="!logged" :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
-          <button v-else type="submit" class="btn shan-bg" @click="logout()">Se déconnecter</button> 
+          <router-link v-if="userStore" :to="{name:'create-post', params:{idUser: this.user}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link v-else :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
+          <router-link v-if="userStore" :to="{name:'profile'}" class="nav-link shan-bg">Profile</router-link>
+          <router-link v-else :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
+           <router-link v-if="userStore" :to="{name: 'posts'}" class="btn shan-btn nav-link" @click="logout()" >Se déconnecter</router-link>
         </nav>
         <div class="break mb-3 mt-2"></div>
-          <p>
-            Bienvenue {{ getUser.name }} 
-            <img v-if="role == 'moderator'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
+          <p v-if="userStore" class="d-flex justify-content-center">
+            Bienvenue {{ userStore.name }} &nbsp;
+            <img v-if="getRole() === 'moderateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
           </p>
         <div class="break mb-5"></div>
       </section>
@@ -34,7 +34,7 @@
               <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>
-                <router-link :to="{name: 'create_comment', params: { idUser: post.User.id, idPost: post.id }}" class="text-opacity-75 text-decoration-none text-dark">
+                <router-link :to="{name: 'create_comment', params: { idUser: 10, idPost: 8 }}" class="text-opacity-75 text-decoration-none text-dark">
                   Commenter
                 </router-link>
               </div>
@@ -53,46 +53,33 @@
 <script>
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { mapGetters, mapActions } from 'vuex';
-
+// import { mapState } from 'vuex';
 // const cors = require('cors');
+
 
 
 export default {
 
     name: 'Home',
-    // components: {
-    //   'create-user-comment-post': CreateUserCommentPost
-    // },
     data () {
         return {
-            posts: {},
-            user: null,
-            logged: false,
-            error: false,
-            nbComments: 0,
-            date: null,
-            userId: 0,
-            userName: null,
-            role: '',
-            token: null
+          posts: {},
+          user: null
         }
     },
     created(){
-      this.getInfosUser;
+      this.getUserStorage();
     },
     mounted () {
       this.getPosts();
       this.formatDate(this.date);
-      this.isConnected();
     },
     methods: {
-      
       getPosts() {
         // Récupération du token depuis le store 
-        const token = localStorage.getItem('token');
-        const accessToken = JSON.parse(token);
-        
+        const user = JSON.parse(localStorage.getItem('authUser'));
+        const accessToken = user.user.token;
+
         axios.get(this.$api.POST_GET_ALL, {
           // Ajout du header Authorization
           headers: {
@@ -102,41 +89,38 @@ export default {
         .then((response) => {
           this.posts = response.data.posts;
           this.posts.forEach(post => {
-            if(post.User.id == this.$route.query.userId){
+            if(post.User.id === this.$route.query.userId){
               this.user = post.User;
             }
           })
-        this.$store.dispatch('getInfosUser', this.user);
+        // this.$store.dispatch('getUser', this.user);
+        
         })
         .catch((error) => {console.log(error)});
       },
       formatDate(date){
         return dayjs(date).format('DD/MM/YYYY');
       },
-      getUserIdLogged(){        
-        this.userId = this.$route.query.userId;
-        return this.userId;
+      getUserStorage () {
+        this.user = JSON.parse(localStorage.getItem('authUser')).user.id;
+        return this.user;
       },
-      isConnected(){
-        this.getUserIdLogged() ? this.logged = true : this.logged = false;
+      getRole(){
+        if(this.$store.state.user.id){
+          return this.$store.getters.getRole;
+        }
       },
       logout(){
         this.$store.dispatch('logout');
-        this.$router.push('/', {
-          refresh: true,
-        });
+        localStorage.removeItem("authUser");
+        this.$router.push("/");
       }
     },
     computed: {
-      ...mapActions([
-        'getInfosUser',
-        'getRoleUser',
-        'addToken'
-      ]),
-      ...mapGetters([
-        'getAccessToken',
-        'getUser'
-      ]),
+      userStore(){
+        return this.$store.state.user;
+      },
+
     }
 }
 </script>

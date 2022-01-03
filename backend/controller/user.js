@@ -38,6 +38,12 @@ exports.login = async (req, res, next) => {
     const email = req.body.email;
     if (email !== null || email !== '') {
         const user = await models.User.findOne({
+            include: [
+                {
+                    model: models.Role,
+                    attributes: ['libelle']
+                }
+            ],
             where: {
                 email: {
                     [Op.eq]: email,
@@ -48,7 +54,7 @@ exports.login = async (req, res, next) => {
             return res.status(401).send({
                 error: 'Utilisateur non trouvé !'
             });
-        };
+        }
         const valid = bcrypt.compareSync(req.body.password, user.password);
         if (!valid) {
             return res.status(401).send({
@@ -56,12 +62,16 @@ exports.login = async (req, res, next) => {
                 error: 'Mot de passe incorrect !'
             });
         }
-        let token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: 86400 });
+        let token = jwt.sign(
+            {id: user.id},
+            process.env.TOKEN,
+            {expiresIn: 86400});
         res.status(200).json({
             id: user.id,
             name: user.name,
             email: user.email,
-            token: token
+            token: token,
+            role: user.Role
         });
     } else {
         res.status(500).json("Une erreur inconnue est survenue !")

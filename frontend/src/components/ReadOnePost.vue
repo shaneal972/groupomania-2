@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
@@ -14,7 +14,7 @@
         <article class="card mb-5">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <p class="card-subtitle mb-1 text-muted shan-fz">Posté le : {{ post.createdAt }}</p>
+                <p class="card-subtitle mb-1 text-muted shan-fz">Posté le : {{ formatClassicDate(post.createdAt) }}</p>
                 <h6 class="card-subtitle mb-1 text-muted shan-fz">Ecrit par : {{ this.name }}</h6>
             </div>
             <p class="card-text text-start mt-3">{{ post.content }}</p>
@@ -23,7 +23,7 @@
             <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: {id: `${post.id}`}}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
-            <router-link class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
+            <router-link v-if="role === 'moderateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
               <button class="btn shan-btn-danger post-btn">Supprimer</button>
             </router-link>
           </div>
@@ -82,14 +82,17 @@ export default {
     },
     mounted () {
       this.getPost();
-      // this.deletePost();
+      // this.role = localStorage.getItem('role');
       this.formatDate(this.date);
     },
     methods: {
+      formatClassicDate(date){
+        return dayjs(date).format('DD/MM/YYYY');
+      },
       async getPost() {
         // Récupération du token du localStorage
-        const token = localStorage.getItem('token');
-        const accessToken = JSON.parse(token);
+        const user = localStorage.getItem('authUser');
+        const accessToken = JSON.parse(user).user.token;
         
         this.id = this.$route.params.id
         const result = await axios.get(this.$api.POST_GET_ONE, { 
@@ -129,8 +132,14 @@ export default {
       formatDate(date){
         dayjs.extend(relativeTime);
         return dayjs(date).fromNow();
-      }   
-    }
+      },
+      role(){
+        return this.$store.getters.getRole;
+      }
+    },
+  computed: {
+
+  }
 }
 </script>
 
