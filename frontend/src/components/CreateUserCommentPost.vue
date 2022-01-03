@@ -37,15 +37,15 @@ export default {
       }
     },
     mounted () {
-      this.createUserComment();
+      // this.createUserComment();
       this.getUserId();
       this.getPostId();
     },
     methods: {
       async createUserComment () {
-        // Récupération du token du localStorage
-        const token = localStorage.getItem('token');
-        const accessToken = JSON.parse(token);
+        // Récupération du token depuis le store 
+        const user = JSON.parse(localStorage.getItem('authUser'));
+        const accessToken = user.user.token;
 
         // Récupérer le message
         const message = this.message;
@@ -73,7 +73,7 @@ export default {
         }
       },
       getUserId () {
-        return this.userId = this.$route.params.idUser;
+        return this.$store.getters.getUserId;
       },
       getPostId () {
         return this.postId = this.$route.params.idPost;

@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   getters: {
     getAccessToken(state) {
-      return state.accessToken;
+      return state.user.token;
     },
     getRole(state) {
       return state.user.role.libelle;
