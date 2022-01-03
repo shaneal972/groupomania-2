@@ -8,7 +8,7 @@
             Vous avez quelque chose à partager pour enrichir et animer notre forum. <br>
             Alors faîtes-le en remplissant tous les champs de ce formulaire.
         </p>
-        <form @submit.prevent="createPost">
+        <form @submit.prevent="createPost()">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" v-model="title" id="title" placeholder="Titre">
                 <label for="title">Titre de l'article</label>
@@ -80,17 +80,6 @@ export default {
       //     query: {id: this.userId}
       //   });
     },
-  },
-  computed: {
-    // ...mapActions([
-    //     'getInfosUser',
-    //     'getRoleUser',
-    //     'addToken'
-    //   ]),
-    //   ...mapGetters([
-    //     'getAccessToken',
-    //     'getUser'
-    //   ]),
   }
 }
 </script>

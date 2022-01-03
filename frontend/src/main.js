@@ -7,7 +7,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import router from './routes/AppRoutes';
 import { api } from './utils/api';
-import store from './store'
+import store from './store/index';
 
 
 Vue.prototype.$api = api;
