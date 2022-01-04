@@ -12,14 +12,18 @@
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
           <router-link v-if="userStore" :to="{name:'create-post', params:{idUser: this.user}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
           <router-link v-else :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
-          <router-link v-if="userStore" :to="{name:'profile'}" class="nav-link shan-bg">Profile</router-link>
+          <router-link v-if="userStore" :to="{name:'profil'}" class="nav-link shan-bg">Profil</router-link>
           <router-link v-else :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
-           <router-link v-if="userStore" :to="{name: 'posts'}" class="btn shan-btn nav-link" @click="logout()" >Se déconnecter</router-link>
+          <button v-if="userStore" class="btn shan-btn nav-link" @click="logout()" >Se déconnecter</button>
         </nav>
         <div class="break mb-3 mt-2"></div>
           <p v-if="userStore" class="d-flex justify-content-center">
             Bienvenue {{ userStore.name }} &nbsp;
             <img v-if="getRole() === 'moderateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
+            <span v-if="getRole() === 'moderateur'">&nbsp;:&nbsp; modérateur.</span>
+          </p>
+          <p v-if="userStore" class="d-flex justify-content-center m-0">
+            <router-link :to="{name:'login'}" class="text-decoration-none text-info">Changer d'utilisateur</router-link>
           </p>
         <div class="break mb-5"></div>
       </section>
@@ -34,15 +38,17 @@
               <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>
-                <router-link :to="{name: 'create_comment', params: { idUser: 10, idPost: 8 }}" class="text-opacity-75 text-decoration-none text-dark">
+                <router-link :to="{name: 'create_comment', params: { idUser: 2, idPost: post.id }}" class="text-opacity-75 text-decoration-none text-dark">
                   Commenter
                 </router-link>
               </div>
             </div>
           </div>
-          <!-- <create-user-comment-post /> -->
           <div class="card-footer">
-            <router-link class="btn shan-btn mb-2 mt-2" :to="{ name: 'read-post', params: { id: post.id }}">Lire L'article</router-link>
+            <router-link class="mb-2 mt-2 p-0" :to="{ name: 'read-post', params: { id: post.id }}">
+               <button v-if="isDisabled" class="shan-btn-disabled p-2" :disabled='isDisabled'>Lire L'article</button>
+               <button v-else class="shan-btn p-2">Lire L'article</button>
+            </router-link>
           </div>
         </div>
       </section>
@@ -120,7 +126,9 @@ export default {
       userStore(){
         return this.$store.state.user;
       },
-
+      isDisabled(){
+        return !this.userStore;
+      }
     }
 }
 </script>

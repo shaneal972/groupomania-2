@@ -67,6 +67,13 @@ main {
     background: #dc3545;
     color: #fff;
   }
+
+  &-disabled {
+    background: #868585;
+    color: rgb(224, 222, 222);
+    box-shadow: 0 4px 4px 0 rgba(26, 25, 25, 0.25);
+    border-radius: 4px;
+  }
 }
 
 .comment {

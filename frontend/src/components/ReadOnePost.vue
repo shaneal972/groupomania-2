@@ -20,11 +20,11 @@
             <p class="card-text text-start mt-3">{{ post.content }}</p>
           </div>
           <div class="d-flex justify-content-between card-footer">
-            <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: {id: `${post.id}`}}">
+            <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
             <router-link v-if="getRole() === 'moderateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
-              <button class="btn shan-btn-danger post-btn">Supprimer</button>
+              <button class="btn shan-btn-danger post-btn" @click="deletePost">Supprimer</button>
             </router-link>
           </div>
         </article>
@@ -70,75 +70,77 @@ import dayjs from 'dayjs';
 const relativeTime = require('dayjs/plugin/relativeTime');
 
 export default {
-    name: "ReadOnePost",
-    data () {
-      return {
-        post: {},
-        id: 0,
-        name: '',
-        comments: {},
-        date: null
+  name: "ReadOnePost",
+  data () {
+    return {
+      post: {},
+      id: 0,
+      name: '',
+      comments: {},
+      date: null
+    }
+  },
+  mounted () {
+    this.getPost();
+    // this.role = localStorage.getItem('role');
+    this.formatDate(this.date);
+  },
+  methods: {
+    formatClassicDate(date){
+      return dayjs(date).format('DD/MM/YYYY');
+    },
+    async getPost() {
+      // Récupération du token du localStorage
+      const user = localStorage.getItem('authUser');
+      const accessToken = JSON.parse(user).user.token;
+      
+      this.id = this.$route.params.id
+      const result = await axios.get(this.$api.POST_GET_ONE, { 
+        params: { id: this.id },
+          // Ajout du header Authorization
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        }
+      });
+      this.post = result.data.post;
+      this.name =  result.data.user.name;
+      this.comments = this.post.Comments;
+    },
+    deletePost(){
+      // Récupération du token depuis le store 
+      const user = JSON.parse(localStorage.getItem('authUser'));
+      const accessToken = user.user.token;
+
+      this.id = this.$route.params.id;
+      
+      console.log(this.id);
+      axios.delete(this.$api.POST_DELETE, {
+        data: {
+          id: this.id
+        },
+          // Ajout du header Authorization
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        }
+      }).then((response) => {
+        const deletedId = response.data;
+        if(deletedId){
+          this.$router.push("/");
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    formatDate(date){
+      dayjs.extend(relativeTime);
+      return dayjs(date).fromNow();
+    },
+    getRole(){
+      if(this.$store.state.user.id){
+        return this.$store.getters.getRole;
       }
     },
-    mounted () {
-      this.getPost();
-      // this.role = localStorage.getItem('role');
-      this.formatDate(this.date);
-    },
-    methods: {
-      formatClassicDate(date){
-        return dayjs(date).format('DD/MM/YYYY');
-      },
-      async getPost() {
-        // Récupération du token du localStorage
-        const user = localStorage.getItem('authUser');
-        const accessToken = JSON.parse(user).user.token;
-        
-        this.id = this.$route.params.id
-        const result = await axios.get(this.$api.POST_GET_ONE, { 
-          params: { id: this.id },
-           // Ajout du header Authorization
-          headers: {
-            Authorization: 'Bearer ' + accessToken,
-          }
-        });
-        this.post = result.data.post;
-        this.name =  result.data.user.name;
-        this.comments = this.post.Comments;
-      },
-      // deletePost(){
-      //   // Récupération du token du localStorage
-      //   const token = localStorage.getItem('token');
-      //   const accessToken = JSON.parse(token);
-
-      //   this.id = this.$route.params.id;
-        
-      //   console.log(this.id);
-      //   axios.delete(this.$api.POST_DELETE, {
-      //     body: {
-      //       id: this.id,
-      //     },
-      //      // Ajout du header Authorization
-      //     headers: {
-      //       Authorization: 'Bearer ' + accessToken,
-      //     }
-      //   }).then((response) => {
-      //     const deletedId = response.data;
-      //     console.log(deletedId);
-      //   }).catch((error) => {
-      //     console.log(error);
-      //   });
-      // },
-      formatDate(date){
-        dayjs.extend(relativeTime);
-        return dayjs(date).fromNow();
-      },
-      getRole(){
-        if(this.$store.state.user.id){
-          return this.$store.getters.getRole;
-        }
-      },
-    },
+  },
   computed: {
 
   }

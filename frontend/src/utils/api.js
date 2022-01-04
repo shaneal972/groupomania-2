@@ -12,6 +12,7 @@ export const api = {
     POST_UPDATE: URL_API + `posts/:id`,
     POST_DELETE: URL_API + `posts/:id`,
     POST_GET_ALL: URL_API + "posts/",
+    POST_USER_GET_ALL: URL_API + "posts/users/:id",
     
     // Comment
     COMMENT_CREATE: URL_API + `comments/posts/:postId/users/:userId`,
@@ -19,7 +20,7 @@ export const api = {
     COMMENT_UPDATE: URL_API + `comments/:id`,
     COMMENT_DELETE: URL_API + `comments/:id`,
     COMMENT_GET_ALL: URL_API + "comments/",
+    COMMENT_USER_GET_ALL: URL_API + "comments/users/:id",
 
-    // Query
-    QUERY_TITLE: URL_API + 'queries/title/'
+    
 }

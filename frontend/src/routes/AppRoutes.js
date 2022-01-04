@@ -23,9 +23,9 @@ let router = new VueRouter({
             name: 'signup'
         },
         {
-            path: '/users/profile',
-            component: require('../components/Profile.vue').default,
-            name: 'profile'
+            path: '/users/profil',
+            component: require('../components/Profil.vue').default,
+            name: 'profil'
         },
         {
             path: '/posts/:id',

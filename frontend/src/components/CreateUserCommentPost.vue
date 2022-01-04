@@ -68,6 +68,7 @@ export default {
             console.log("Vous devez remplir tous les champs !")
           }
           this.message = null;
+          this.$router.push("/");
         }catch(err){
           console.log({err: err.message});
         }

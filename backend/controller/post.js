@@ -127,11 +127,11 @@ exports.updatePost = async (req, res, next) => {
 exports.deletePost = async (req, res, next) => {
     console.log(req);
     // Récupération de l'id et après destruction
-    const id = req.body.params.id;
+    const id = Number(req.body.id);
     try {
         const postDelete = await models.Post.destroy({
             where: {
-                id: id
+                id: id,
             }
         });
         console.log(postDelete);
@@ -144,4 +144,30 @@ exports.deletePost = async (req, res, next) => {
         res.status(400).json({ error: error.message });
     }
 
+};
+
+/**
+ * Permet de récupérer les posts d'un utilisateur donné
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.getPostsUser = async (req, res, next) => {
+    // Récupération de l'id de l'utilisateur
+    const id = req.body.id;
+    // Récupération des posts dans la bdd lié à cet utilisateur
+    try {
+        const posts = await models.Post.findAll({
+            where: {
+                userId: id
+            }
+        });
+        if (posts.length > 0) {
+            res.status(200).send(posts);
+        } else {
+            res.json("Cet utilisateur n'a pas encore d'articles !")
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
