@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
       <nav></nav>
     </header>
     <main class="row flex-column">
@@ -35,6 +35,11 @@
         </p>
       </div>
     </main>
+    <footer class="row main">
+      <p class="text-center">
+        &copy; - ShanDev 2021
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -67,7 +72,6 @@ export default {
       )
       .then((response) => {
         this.userInfos = response.data;
-        console.log(this.userInfos);
         this.userId = this.userInfos.id;
         localStorage.setItem('authUser', JSON.stringify({user: this.userInfos}));
         // Ajout des infos user dans le store

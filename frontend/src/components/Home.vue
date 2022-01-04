@@ -25,9 +25,9 @@
           <p v-if="userStore" class="d-flex justify-content-center m-0">
             <router-link :to="{name:'login'}" class="text-decoration-none text-info">Changer d'utilisateur</router-link>
           </p>
-        <div class="break mb-5"></div>
+        <div v-if="userStore" class="break mb-5"></div>
       </section>
-      <section class="body">
+      <section class="body w-75">
         <div class="card mb-5" v-for="post in posts" :key="post.id">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
@@ -35,10 +35,10 @@
             <p class="card-date text-start mb-1 mt-4 shan-fz">Posté le : {{ formatDate(post.createdAt)  }}</p>
             <p class="card-text text-start shan-pt mb-5">{{ post.content.substring(0, 300)  }}</p>
             <div class="d-flex justify-content-end w-75">
-              <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
+              <div v-if="userStore" class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>
-                <router-link :to="{name: 'create_comment', params: { idUser: 2, idPost: post.id }}" class="text-opacity-75 text-decoration-none text-dark">
+                <router-link :to="{name: 'create_comment', params: { idUser: userStore.id, idPost: post.id }}" class="text-opacity-75 text-decoration-none text-dark">
                   Commenter
                 </router-link>
               </div>
@@ -46,13 +46,18 @@
           </div>
           <div class="card-footer">
             <router-link class="mb-2 mt-2 p-0" :to="{ name: 'read-post', params: { id: post.id }}">
-               <button v-if="isDisabled" class="shan-btn-disabled p-2" :disabled='isDisabled'>Lire L'article</button>
-               <button v-else class="shan-btn p-2">Lire L'article</button>
+              <button v-if="isDisabled" class="shan-btn-disabled p-2" :disabled='isDisabled'>Lire L'article</button>
+              <button v-else class="shan-btn p-2">Lire L'article</button>
             </router-link>
           </div>
         </div>
       </section>
     </div>
+    <footer class="row main">
+      <p class="text-center">
+        &copy; - ShanDev 2021
+      </p>
+    </footer>
   </div>
 </template>
 

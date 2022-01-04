@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
@@ -60,6 +60,11 @@
         </article>
       </section>
     </div>
+    <footer class="row main">
+      <p class="text-center">
+        &copy; - ShanDev 2021
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -112,8 +117,6 @@ export default {
       const accessToken = user.user.token;
 
       this.id = this.$route.params.id;
-      
-      console.log(this.id);
       axios.delete(this.$api.POST_DELETE, {
         data: {
           id: this.id

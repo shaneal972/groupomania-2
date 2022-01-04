@@ -27,6 +27,4 @@ exports.getCountCommentsPost = async (id) => {
         },
         raw: true
     })
-
-    console.log('comments', comments);
 }

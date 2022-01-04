@@ -12,7 +12,6 @@ const models = require('../models/index');
  * @param {*} next 
  */
 exports.signup = async (req, res, next) => {
-    console.log('body', req.body);
     //Hashage du mot de passe
     const hash = await bcrypt.hash(req.body.password, 10);
     let infoUser = {

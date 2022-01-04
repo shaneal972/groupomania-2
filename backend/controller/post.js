@@ -125,7 +125,6 @@ exports.updatePost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.deletePost = async (req, res, next) => {
-    console.log(req);
     // Récupération de l'id et après destruction
     const id = Number(req.body.id);
     try {
@@ -134,7 +133,6 @@ exports.deletePost = async (req, res, next) => {
                 id: id,
             }
         });
-        console.log(postDelete);
         if (postDelete) {
             res.status(200).send("Post supprimé avec succès !");
         } else {

@@ -18,6 +18,11 @@
         </div>
         </form><!-- Fin de form -->
       </div><!-- Fin du main -->
+      <footer class="row main">
+        <p class="text-center">
+          &copy; - ShanDev 2021
+        </p>
+      </footer>
   </div>
 </template>
 

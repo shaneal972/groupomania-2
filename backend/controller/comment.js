@@ -9,7 +9,6 @@ const query = require('../utils/query');
  */
 exports.getComments = async (req, res, next) => {
     const comments = await models.Comment.findAll();
-    console.log(comments);
     if (comments.length > 0) {
         return res.status(200).send(comments);
     } else {
@@ -25,7 +24,6 @@ exports.getComments = async (req, res, next) => {
  */
 exports.createUserCommentPost = async (req, res, next) => {
     // Récupération de l'id utilisateur et de l'id du post
-    console.log(req.body);
     const userId = req.body.userId;
     const postId = req.body.postId;
     // Récupération du message du commentaire
