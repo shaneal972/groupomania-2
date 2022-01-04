@@ -21,7 +21,9 @@ exports.getPosts = async (req, res, next) => {
             ['id', 'DESC'],
         ]
     });
-    res.status(200).send({ posts });
+    if (posts.length > 0) {
+        res.status(200).send({posts})
+    }
 };
 
 /**

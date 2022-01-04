@@ -62,14 +62,13 @@ export default {
   methods: {
     login() {
       const url = this.$api.USER_LOGIN;
+      // Création du payload de la requête axios 
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
       // Envoi des informations au backend avec axios 
-      axios.post(
-          url,
-          {
-            email: this.email,
-            password: this.password
-          }
-      )
+      axios.post(url, payload)
       .then((response) => {
         this.userInfos = response.data;
         this.userId = this.userInfos.id;

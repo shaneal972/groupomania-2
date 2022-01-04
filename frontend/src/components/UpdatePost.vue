@@ -112,6 +112,7 @@ export default {
     },
   },
   computed: {
+    // mettre dans method
     getUserId(){
       return this.$store.getters.getUserId;
     }

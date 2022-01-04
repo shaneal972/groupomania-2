@@ -59,9 +59,6 @@ export default {
       password: ''
     }
   },
-  mounted(){
-    this.signup();
-  },
   methods: {
     async signup(){
       await axios.post(this.$api.USER_SIGNUP, 

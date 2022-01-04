@@ -37,12 +37,6 @@ export default new Vuex.Store({
     addUser({ commit }, userInfos) {
       commit('ADD_USER', userInfos);
     },
-    // setRoleUser( {commit}, userRole) {
-    //   commit('SET_ROLE', userRole)
-    // },
-    // setToken( {commit}, token) {
-    //   commit('SET_TOKEN', token)
-    // },
     logout({ commit }) {
       commit('DEL_USER');
     }

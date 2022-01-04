@@ -4,9 +4,9 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/create/:idUser', auth, postController.createPost);
 router.post('/users/:id', postController.getPostsUser);
-router.put('/:id', postController.updatePost);
+router.post('/create/:idUser', auth, postController.createPost);
+router.put('/:id', auth, postController.updatePost);
 router.delete('/:id', postController.deletePost);
 router.get('/:id', auth, postController.getOnePost);
 router.get('/', auth, postController.getPosts);
