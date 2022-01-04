@@ -43,7 +43,7 @@ export default {
     data(){
       return {
         idUser: null,
-        totalComments: null,
+        totalComments: 0,
         totalPosts: null,
         comments: null,
         posts: null
@@ -55,8 +55,7 @@ export default {
     },
     methods: {
       getCommentsUser(){
-        this.idUser = this.userStore.id
-        console.log(this.idUser);
+        this.idUser = this.userStore.id;
         axios.post(
           this.$api.COMMENT_USER_GET_ALL, 
           { 
@@ -64,14 +63,15 @@ export default {
           }
         )
         .then((response) => {
-            this.totalComments = response.data.length
-            this.comments = response.data
+          this.totalComments = response.data.length;
+          this.comments = response.data;
         })
-        .catch((error => {error.message}))
+        .catch((error) => {
+          error.message
+        })
       },
       getPostsUser(){
-        this.idUser = this.userStore.id
-        console.log(this.idUser);
+        this.idUser = this.userStore.id;
         axios.post(
           this.$api.POST_USER_GET_ALL, 
           { 

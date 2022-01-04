@@ -88,7 +88,11 @@ exports.getCommentsUser = async (req, res, next) => {
         if (comments.length > 0) {
             res.status(200).send(comments);
         } else {
-            res.json("Cet utilisateur n'a pas encore commenté de post !")
+            res.json({
+                error: "Cet utilisateur n'a pas encore commenté de post !",
+                count: comments.length
+            });
+            
         }
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -165,7 +165,7 @@ exports.getPostsUser = async (req, res, next) => {
         if (posts.length > 0) {
             res.status(200).send(posts);
         } else {
-            res.json("Cet utilisateur n'a pas encore d'articles !")
+            res.json("Cet utilisateur n'a pas encore écrit d'articles !")
         }
     } catch (error) {
         res.status(400).json({ error: error.message });
