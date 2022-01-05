@@ -19,8 +19,8 @@
         <div class="break mb-3 mt-2"></div>
           <p v-if="getUserStore" class="d-flex justify-content-center">
             Bienvenue {{ getUserStore.name }} &nbsp;
-            <img v-if="getRole() === 'moderateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
-            <span v-if="getRole() === 'moderateur'">&nbsp;:&nbsp; modérateur.</span>
+            <img v-if="getRole() === 'modérateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
+            <span v-if="getRole() === 'modérateur'">&nbsp;:&nbsp; modérateur.</span>
           </p>
           <p v-if="getUserStore" class="d-flex justify-content-center m-0">
             <router-link :to="{name:'login'}" class="text-decoration-none text-info">Changer d'utilisateur</router-link>
@@ -38,9 +38,9 @@
               <div class="card-link position-relative text-decoration-none text-dark text-opacity-75" title="Commenter">
                 <img src="../assets/comments.png" width="24" height="24" alt="Icône pour poster un commentaire">
                 <span class="position-absolute top-0 start-0 translate-middle badge bg-info">{{ post.Comments.length}}</span>
-                <router-link :to="{name: 'create_comment', params: { idUser: getUserStorage.id, idPost: post.id }}" class="text-opacity-75 text-decoration-none text-dark">
-                  Commenter
-                </router-link>
+                <span class="text-opacity-75 text-decoration-none text-dark">
+                  Commentaires
+                </span>
               </div>
             </div>
           </div>

@@ -5,9 +5,11 @@
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
-        <h1 class="fw-bolder">Article - {{ post.id }}</h1>
+        <h1 class="fw-bolder">Article - {{ post.id }} - {{ post.title }}</h1>
         <div class="break mb-2"></div>
-        <button class="btn w-75 shan-btn mb-4 mt-3">{{ post.title }}</button>
+        <router-link :to="{name: 'create_comment', params: { idUser: getUserStore.id, idPost: post.id }}" class="mb-2 w-50 shan-bg text-opacity-75 text-decoration-none text-light">
+          Commenter
+        </router-link>
         <div class="break mb-5"></div>
       </section>
       <section class="body">
@@ -20,10 +22,10 @@
             <p class="card-text text-start mt-3">{{ post.content }}</p>
           </div>
           <div class="d-flex justify-content-between card-footer">
-            <router-link class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
+            <router-link v-if="verifUserPosted()" class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
-            <router-link v-if="getRole() === 'moderateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
+            <router-link v-if="getRole() === 'modérateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
               <button class="btn shan-btn-danger post-btn" @click="deletePost">Supprimer</button>
             </router-link>
           </div>
@@ -79,15 +81,19 @@ export default {
   data () {
     return {
       post: {},
+      // id du post dans l'url
       id: 0,
       name: '',
       comments: {},
-      date: null
+      date: null,
+      idConnected: null
     }
   },
+  // created(){
+  //   this.getUserStore();
+  // },
   mounted () {
     this.getPost();
-    // this.role = localStorage.getItem('role');
     this.formatDate(this.date);
   },
   methods: {
@@ -143,9 +149,21 @@ export default {
         return this.$store.getters.getRole;
       }
     },
+    getUserStorage() {
+      if(localStorage.getItem('authUser') !== null) {
+        return JSON.parse(localStorage.getItem('authUser')).user;
+      }
+    },
+    // Vérifie que l'id de l'utilisateur qui a posté l'article est celui qui est connecté
+    verifUserPosted(){
+      this.idConnected = this.getUserStore.id;
+      return this.idConnected === this.post.userId ? true : false;
+    }
   },
   computed: {
-
+    getUserStore(){
+      return this.$store.state.user;
+    },
   }
 }
 </script>

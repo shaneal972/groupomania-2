@@ -18,7 +18,7 @@ exports.signup = async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: hash,
-        roleId: 3
+        roleId: 2
     };
     const user = await models.User.create(infoUser);
     res.status(200).json({

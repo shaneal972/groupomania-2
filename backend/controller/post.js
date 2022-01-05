@@ -96,11 +96,11 @@ exports.getOnePost = async (req, res, next) => {
  */
 exports.updatePost = async (req, res, next) => {
     // Récupération de l'id 
-    const id = req.body.params.id;
+    const id = req.body.id;
     // Récupération des nouvelles informations du post
     const postToUpdate = {
-        title: req.body.data.title,
-        content: req.body.data.content
+        title: req.body.title,
+        content: req.body.content
     }
     // Vérification que le post est dans la bdd, 
     const post = await models.Post.findAll({ where: { id: id } });

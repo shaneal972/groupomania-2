@@ -27,6 +27,13 @@
             <input type="password" class="form-control" id="password" v-model="password" placeholder="Password" required>
           </div>
           <div class="input-group">
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option selected>Sélectionnez le rôle</option>
+              <option value="1">modérateur</option>
+              <option value="2">employé</option>
+            </select>
+          </div>
+          <div class="input-group">
             <input type="submit" class="form-control btn-login" id="btn-submit" value="S'inscrire">
           </div>
         </form>

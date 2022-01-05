@@ -18,8 +18,8 @@
                 <label for="content">Contenu de l'article</label>
             </div>
             <div class="input-group">
-          <input type="submit" class="form-control btn-login" id="btn-submit" value="Créer l'article">
-        </div>
+              <input type="submit" class="form-control btn-login" id="btn-submit" value="Créer l'article">
+            </div>
         </form><!-- Fin de form -->
     </div><!-- Fin du main -->
     <footer class="row main">

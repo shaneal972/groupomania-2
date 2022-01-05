@@ -8,7 +8,7 @@
             Vous avez quelque chose à partager pour enrichir et animer notre forum. <br>
             Alors faîtes-le en remplissant tous les champs de ce formulaire.
         </p>
-        <form @submit.prevent="updatePost">
+        <form @submit.prevent="updatePost()">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="title" v-model="title">
                 <label for="title">Titre de l'article</label>
@@ -73,9 +73,9 @@ export default {
       })
       
     },
-    // getTitle(){
-    //   return this.title;
-    // },
+    getUserId(){
+      return this.$store.getters.getUserId;
+    },
     getPostId(){
       return this.$route.params.id;
     },
@@ -88,24 +88,36 @@ export default {
       const id = this.getPostId();
       const accessToken = this.getToken();
       if (this.title !== null && this.content !== null && this.title !== '' && this.content !== '') {
+        console.log("I'm here");
         const title = this.title;
         const content = this.content;
-        await axios.put(this.$api.POST_UPDATE, {
-          params: { id: id},
-          data: {
+        try {
+          await axios.put(this.$api.POST_UPDATE, 
+          // params: { id: id},
+          // data: {
+          //   title: title,
+          //   content: content,
+          // },
+          {
             title: title,
             content: content,
+            id: id
           },
-          headers: {
-            Authorization: 'Bearer ' + accessToken,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
           }
-        });
+        )
+        }catch(error) {
+          console.log(error.message);
+        }
       } else {
         console.log("Vous devez remplir les champs !");
       }
       this.title = null;
       this.content = null;
-      await this.$router.push({
+      this.$router.push({
         path: '/',
         query: {id: this.getUserId}
       });
@@ -113,9 +125,7 @@ export default {
   },
   computed: {
     // mettre dans method
-    getUserId(){
-      return this.$store.getters.getUserId;
-    }
+    
   }
 }
 </script>
