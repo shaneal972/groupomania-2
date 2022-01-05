@@ -62,15 +62,18 @@ export default {
   methods: {
     async signup(){
       await axios.post(this.$api.USER_SIGNUP, 
-      {
-        name: this.name,
-        email: this.mail,
-        password: this.password
-      },
+        {
+          name: this.name,
+          email: this.mail,
+          password: this.password
+        },
       );
       this.name = '';
       this.mail = '';
       this.password = '';
+      this.$router.push({
+        path: '/users/login'
+      });
     }
   }
 }

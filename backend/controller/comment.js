@@ -74,8 +74,10 @@ exports.getCommentsPost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.getCommentsUser = async (req, res, next) => {
+    console.log(req.body);
+    console.log(req.query);
     // Récupération de l'id de l'utilisateur
-    const id = req.body.id;
+    const id = req.query.id;
     // Récupération des commentaires dans la bdd lié à cet utilisateur
     try {
         const comments = await models.Comment.findAll({

@@ -153,7 +153,7 @@ exports.deletePost = async (req, res, next) => {
  */
 exports.getPostsUser = async (req, res, next) => {
     // Récupération de l'id de l'utilisateur
-    const id = req.body.id;
+    const id = req.query.id;
     // Récupération des posts dans la bdd lié à cet utilisateur
     try {
         const posts = await models.Post.findAll({
@@ -164,7 +164,10 @@ exports.getPostsUser = async (req, res, next) => {
         if (posts.length > 0) {
             res.status(200).send(posts);
         } else {
-            res.json("Cet utilisateur n'a pas encore écrit d'articles !")
+            res.json({
+                error: "Cet utilisateur n'a pas encore écrit d'articles !",
+                count: 0
+            })
         }
     } catch (error) {
         res.status(400).json({ error: error.message });

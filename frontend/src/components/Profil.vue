@@ -64,11 +64,6 @@
 
 <script>
 import axios from 'axios';
-// import dayjs from 'dayjs';
-// import { mapState } from 'vuex';
-// const cors = require('cors');
-
-
 
 export default {
     name: 'Profil',
@@ -88,14 +83,19 @@ export default {
     methods: {
       getCommentsUser(){
         this.idUser = this.getUserStore.id;
-        axios.post(
+        axios.get(
           this.$api.COMMENT_USER_GET_ALL, 
           { 
-             id: this.idUser  
+            params: {id: this.idUser}
           }
         )
         .then((response) => {
-          this.totalComments = response.data.length;
+          console.log(response.data);
+          if(response.data.count == 0){
+            this.totalComments = response.data.count;
+          }else{
+            this.totalComments = response.data.length;
+          }
           this.comments = response.data;
         })
         .catch((error) => {
@@ -104,15 +104,19 @@ export default {
       },
       getPostsUser(){
         this.idUser = this.getUserStore.id;
-        axios.post(
+        axios.get(
           this.$api.POST_USER_GET_ALL, 
           { 
-             id: this.idUser  
+            params: {id: this.idUser}
           }
         )
         .then((response) => {
-            this.totalPosts = response.data.length
-            this.posts = response.data
+            if(response.data.count == 0){
+            this.totalPosts = response.data.count;
+          }else{
+            this.totalPosts = response.data.length;
+          }
+          this.posts = response.data;
         })
         .catch((error => {error.message}))
       },
