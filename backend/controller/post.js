@@ -84,7 +84,7 @@ exports.getOnePost = async (req, res, next) => {
     } else {
         const idUser = result[0].userId;
         const user = await dbQuery.getNameOfUserById(idUser);
-        res.status(200).json({post: result[0], user: user});
+        res.status(200).json({post: result[0], user: user})
     }
 };
 
@@ -127,14 +127,11 @@ exports.updatePost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.deletePost = async (req, res, next) => {
-    console.log("I'm here");
-    console.log(req.body);
     // Récupération de l'id et après destruction
-    const id = Number(req.body.id);
     try {
         const postDelete = await models.Post.destroy({
             where: {
-                id: id,
+                id: req.query.id
             }
         });
         if (postDelete) {

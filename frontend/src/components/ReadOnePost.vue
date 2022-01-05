@@ -22,7 +22,7 @@
             <p class="card-text text-start mt-3">{{ post.content }}</p>
           </div>
           <div class="d-flex justify-content-between card-footer">
-            <router-link v-if="verifUserPosted()" class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
+            <router-link v-if="verifUserPosted() || getRole() === 'modérateur'" class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
             <router-link v-if="getRole() === 'modérateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn p-0" :to="{name: 'delete-post', params: {id: post.id}}">
@@ -122,21 +122,22 @@ export default {
       const user = JSON.parse(localStorage.getItem('authUser'));
       const accessToken = user.user.token;
       console.log(accessToken);
-
-      this.id = this.$route.params.id;
+      this.id = this.$route.params.id
       console.log(this.id);
       try {
         await axios.delete(
           this.$api.POST_DELETE, 
           {
-            id: this.id
-          },
-          {
+            params: { id: this.id }, 
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: "Bearer " + accessToken,
             }
           }
         );
+        this.$router.push({
+          path: '/',
+          query: {id: this.getUserStore.id}
+        });
         }catch(error) {
           console.log(error.message);
         }
