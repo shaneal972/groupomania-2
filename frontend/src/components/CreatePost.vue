@@ -55,9 +55,13 @@ export default {
       this.user = localStorage.getItem('authUser');
       return JSON.parse(this.user).user.token;
     },
+    getUserId(){
+      return this.$store.getters.getUserId;
+    },
     async createPost () {
       
       const accessToken = this.getToken();
+      const userId = this.getUserId();
 
       const title = this.title;
       const content = this.content;
@@ -67,7 +71,7 @@ export default {
           {
             title: title,
             content: content,
-            userId: this.$route.params.idUser
+            userId: userId
           },
           {
             headers: {
@@ -82,10 +86,10 @@ export default {
       this.content = null;
       this.$router.push({
         path: '/', 
-        query: {id: this.$route.params.idUser}
+        query: {id: userId}
       });
     },
-  }
+  },
 }
 </script>
 

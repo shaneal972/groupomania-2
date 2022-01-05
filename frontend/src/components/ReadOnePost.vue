@@ -25,8 +25,8 @@
             <router-link v-if="verifUserPosted()" class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
-            <router-link v-if="getRole() === 'modérateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn" :to="{name: 'delete-post'}">
-              <button class="btn shan-btn-danger post-btn" @click="deletePost">Supprimer</button>
+            <router-link v-if="getRole() === 'modérateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn p-0" :to="{name: 'delete-post', params: {id: post.id}}">
+              <button class="btn shan-btn-danger post-btn w-100 pt-2" @click="deletePost()">Supprimer</button>
             </router-link>
           </div>
         </article>
@@ -117,28 +117,29 @@ export default {
       this.name =  result.data.user.name;
       this.comments = this.post.Comments;
     },
-    deletePost(){
+    async deletePost(){
       // Récupération du token depuis le store 
       const user = JSON.parse(localStorage.getItem('authUser'));
       const accessToken = user.user.token;
+      console.log(accessToken);
 
       this.id = this.$route.params.id;
-      axios.delete(this.$api.POST_DELETE, {
-        data: {
-          id: this.id
-        },
-          // Ajout du header Authorization
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
+      console.log(this.id);
+      try {
+        await axios.delete(
+          this.$api.POST_DELETE, 
+          {
+            id: this.id
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
+          }
+        );
+        }catch(error) {
+          console.log(error.message);
         }
-      }).then((response) => {
-        const deletedId = response.data;
-        if(deletedId){
-          this.$router.push("/");
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
     },
     formatDate(date){
       dayjs.extend(relativeTime);

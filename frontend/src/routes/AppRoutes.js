@@ -39,6 +39,7 @@ let router = new VueRouter({
         },
         {
             path: '/posts/:id',
+            component: ReadOnePost,
             name: 'delete-post'
         },
         {

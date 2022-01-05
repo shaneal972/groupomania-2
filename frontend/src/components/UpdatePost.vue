@@ -88,16 +88,10 @@ export default {
       const id = this.getPostId();
       const accessToken = this.getToken();
       if (this.title !== null && this.content !== null && this.title !== '' && this.content !== '') {
-        console.log("I'm here");
         const title = this.title;
         const content = this.content;
         try {
           await axios.put(this.$api.POST_UPDATE, 
-          // params: { id: id},
-          // data: {
-          //   title: title,
-          //   content: content,
-          // },
           {
             title: title,
             content: content,

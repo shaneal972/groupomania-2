@@ -114,7 +114,7 @@ exports.updatePost = async (req, res, next) => {
             res.status(200).send("Post mis à jour avec succès !");
         }
         } catch(error) {
-            res.status(400).json({ error: error.message });
+            res.status(400).json({ error: error.message })
         }
     }
 
@@ -127,6 +127,8 @@ exports.updatePost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.deletePost = async (req, res, next) => {
+    console.log("I'm here");
+    console.log(req.body);
     // Récupération de l'id et après destruction
     const id = Number(req.body.id);
     try {
