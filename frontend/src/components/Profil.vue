@@ -1,29 +1,30 @@
 <template>
   <div class="container">
     <header class="row mt-2 pb-2 justify-content-center">
-      <img class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
+      <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
         <h1 class="fw-bolder mb-0">Notre forum - Groupomania</h1>
         <div class="break mb-2"></div>
         <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
-          <router-link v-if="getUserStore" :to="{name:'create-post', params:{idUser: getUserStore.id}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
-          <router-link v-else :to="{name:'login'}" class="nav-link shan-bg">Se connecter</router-link>
-          <router-link v-if="getUserStore" :to="{name:'profil'}" class="nav-link shan-bg">Profil</router-link>
-          <router-link v-else :to="{name:'signup'}" class="nav-link shan-bg">S'inscrire</router-link>
-          <button v-if="getUserStore" class="btn shan-btn nav-link" @click="logout()" >Se déconnecter</button>
+          <router-link v-if="getUserStore" title="Dirige vers la page de création d'un article" :to="{name:'create-post', params:{idUser: getUserStore.id}}" class="btn shan-btn nav-link">Ajouter un article</router-link>
+          <router-link v-else :to="{name:'login'}" title="Dirige vers la page de connexion" class="nav-link shan-bg">Se connecter</router-link>
+          <router-link v-if="getUserStore" title="Dirige vers la page de profil" :to="{name:'profil'}" class="nav-link shan-bg">Profil</router-link>
+          <router-link v-else :to="{name:'signup'}" title="Dirige vers la page d'inscription d'un utilisateur" class="nav-link shan-bg">S'inscrire</router-link>
+          <button v-if="getUserStore" title="Permet de déconnecter l'utilisateur connecté" class="btn shan-btn nav-link" @click="logout()" >Se déconnecter</button>
         </nav>
         <div class="break mb-3 mt-2"></div>
           <p v-if="getUserStore" class="d-flex justify-content-center">
             Bienvenue {{ getUserStore.name }} &nbsp;
-            <img v-if="getRole() === 'moderateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
+            <img v-if="getRole() === 'moderateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="32" height="32" title="Modérateur">
             <span v-if="getRole() === 'moderateur'">&nbsp;:&nbsp; modérateur.</span>
           </p>
           <p v-if="getUserStore" class="d-flex justify-content-center m-0">
-            <router-link :to="{name:'login'}" class="text-decoration-none text-info">Changer d'utilisateur</router-link>
+            <router-link :to="{name:'login'}" title="Retour vers la page de login" class="text-decoration-none text-info">Changer d'utilisateur</router-link> &nbsp;&nbsp; - &nbsp;&nbsp;
+            <router-link :to="{name:'posts'}" title="Retour vers l'accueil du site" class="text-decoration-none text-info">Accueil</router-link>
           </p>
-        <div v-if="getUserStore" class="break mb-5"></div>
+        <div v-if="getUserStore" class="break mb-3"></div>
       </section>
       <section class="body w-75">
         <div>
@@ -77,7 +78,7 @@ export default {
       }
     },
     mounted(){
-      this.getCommentsUser();
+      // this.getCommentsUser();
       this.getPostsUser();
     },
     methods: {

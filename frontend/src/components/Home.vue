@@ -17,9 +17,9 @@
           <button v-if="getUserStore" class="btn shan-btn nav-link" @click="logout()" >Se déconnecter</button>
         </nav>
         <div class="break mb-3 mt-2"></div>
-          <p v-if="getUserStore" class="d-flex justify-content-center">
+          <p v-if="getUserStore" class="d-flex justify-content-center align-items-center">
             Bienvenue {{ getUserStore.name }} &nbsp;
-            <img v-if="getRole() === 'modérateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="18" height="18" title="Modérateur">
+            <img v-if="getRole() === 'modérateur'" src="../assets/user-tie-solid.svg" alt="Icone de modérateur" width="32" height="32" title="Modérateur">
             <span v-if="getRole() === 'modérateur'">&nbsp;:&nbsp; modérateur.</span>
           </p>
           <p v-if="getUserStore" class="d-flex justify-content-center m-0">
@@ -47,7 +47,7 @@
           <div class="card-footer">
             <router-link class="mb-2 mt-2 p-0" :to="{ name: 'read-post', params: { id: post.id }}">
               <button v-if="isDisabled" class="shan-btn-disabled p-2" :disabled='isDisabled'>Lire L'article</button>
-              <button v-else class="shan-btn p-2">Lire L'article</button>
+              <button v-else class="btn btn-danger fs-6 p-2 text-light">Lire L'article</button>
             </router-link>
           </div>
         </div>
@@ -104,7 +104,6 @@ export default {
           })
           .then((response) => {
             this.posts = response.data.posts;
-            console.log(this.posts);
             this.posts.forEach(post => {
               if(post.User.id === this.$route.query.userId){
                 this.user = post.User;

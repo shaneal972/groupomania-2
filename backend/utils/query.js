@@ -10,6 +10,15 @@ exports.getNameOfUserById = async (idUser) => {
     return user;
 };
 
+exports.getEmailOfUserById = async (idUser) => {
+    const email = await models.User.findOne({
+        where: {
+            id: idUser
+        }
+    });
+    return email;
+};
+
 exports.getPostTitle = async (idPost) => {
     const result = await models.Post.findOne({
         where: {

@@ -5,11 +5,16 @@
     </header>
     <div class="main row justify-content-center pt-2">
       <section class="header row justify-content-center">
-        <h1 class="fw-bolder">Article - {{ post.id }} - {{ post.title }}</h1>
+        <h1 class="fw-bolder">{{ post.title }}</h1>
         <div class="break mb-2"></div>
-        <router-link :to="{name: 'create_comment', params: { idUser: getUserStore.id, idPost: post.id }}" class="mb-2 w-50 shan-bg text-opacity-75 text-decoration-none text-light">
-          Commenter
-        </router-link>
+        <nav class="d-flex w-75 flex-column flex-sm-row gap-3 justify-content-around align-items-center" >
+          <router-link :to="{name: 'posts', params: { idUser: getUserStore.id}}" class="mb-2 w-50 shan-bg text-opacity-75 text-decoration-none" title="Retour vers l'accueil du site">
+            Accueil
+          </router-link>
+          <router-link :to="{name: 'create_comment', params: { idUser: getUserStore.id, idPost: post.id }}" class="mb-2 w-50 shan-bg text-opacity-75 text-decoration-none" title="Permet de créer un commentaire">
+            Commenter
+          </router-link>
+        </nav>
         <div class="break mb-5"></div>
       </section>
       <section class="body">
@@ -22,10 +27,13 @@
             <p class="card-text text-start mt-3">{{ post.content }}</p>
           </div>
           <div class="d-flex justify-content-between card-footer">
-            <router-link v-if="verifUserPosted() || getRole() === 'modérateur'" class="btn shan-btn-warning mb-2 mt-2 post-btn" :to="{name: 'update-post', params: { id: post.id }}">
+            <router-link v-if="verifUserPosted()" class="btn shan-btn-warning mb-2 mt-2 post-btn" title="Permet de modifier un article" :to="{name: 'update-post', params: { id: post.id }}">
               <button class="btn shan-btn-warning post-btn">Modifier</button>
             </router-link>
-            <router-link v-if="getRole() === 'modérateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn p-0" :to="{name: 'delete-post', params: {id: post.id}}">
+            <div v-if="getRole() === 'modérateur'" class="btn shan-btn-warning mb-2 mt-2">
+              <a :href="`mailto:${this.email}`" title="Envoi d'un mail à un utilisateur" class="btn d-block post-btn">Signaler</a>
+            </div>
+            <router-link v-if="getRole() === 'modérateur'" class="btn shan-btn-danger mb-2 mt-2 post-btn p-0" title="permet de supprimer un article" :to="{name: 'delete-post', params: {id: post.id}}">
               <button class="btn shan-btn-danger post-btn w-100 pt-2" @click="deletePost()">Supprimer</button>
             </router-link>
           </div>
@@ -84,6 +92,7 @@ export default {
       // id du post dans l'url
       id: 0,
       name: '',
+      email: null,
       comments: {},
       date: null,
       idConnected: null
@@ -115,6 +124,7 @@ export default {
       });
       this.post = result.data.post;
       this.name =  result.data.user.name;
+      this.email = result.data.user.email;
       this.comments = this.post.Comments;
     },
     async deletePost(){

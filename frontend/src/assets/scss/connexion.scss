@@ -13,15 +13,21 @@ header {
 }
 
 main {
-  background: #FAE0DE;
+  background: #C83325;
   padding-bottom: 10px;
   height: 84vh;
+
+  p {
+    color: #FFFFFE;
+  }
+
+  
 
   .p-signup {
     span {
       font-weight: 800;
       a {
-        color: #FC2F07;
+        color: #DEF7FA;
         text-decoration: none;
       }
     }
@@ -31,7 +37,7 @@ main {
     font-size: 1.3rem;
     margin-bottom: 10px;
     padding-top: 10px;
-    color: #000;
+    color: #FFF;
   }
 }
 
@@ -40,6 +46,7 @@ main {
   h1 {
     font-size: 1.5rem;
     padding: 10px 0;
+    color: white;
   }
 
   .break {
@@ -50,8 +57,8 @@ main {
 }
 
 .shan-btn {
-  background: #FC2F07;
-  color: #FAE0DE;
+  background: #faf7f7;
+  color: #000;
   font-size: 1.1rem;
   // width: 45%;  
   // padding: 6px;
@@ -76,6 +83,14 @@ main {
   }
 }
 
+.text-muted {
+  color: #FFFFFE !important;
+}
+
+.text-info {
+  color: #DEFAEC !important;
+}
+
 .comment {
   text-decoration: none;
 }
@@ -94,8 +109,8 @@ main {
 }
 
 .shan-bg {
-  background-color: #FC2F07 !important;
-  color: #FAE0DE;
+  background-color: #faf7f7 !important;
+  color: #000000;
   font-size: 0.975rem;
   padding: 10px;
 }
@@ -109,9 +124,24 @@ main {
 // }
 
 .body{
+
+  .card-header {
+    .text-muted {
+      color: #fd7e14 !important;
+    }
+  }
+
+  .card-body {
+    .card-subtitle {
+      color: #000 !important;
+      font-size: 0.8rem !important;
+    }
+  }
+
   .card-date {
     margin: 0;
-    color: #6c757d;
+    color: #000;
+    font-size: 0.7rem !important;
   }
 
   .shan-pt::after {
@@ -122,22 +152,36 @@ main {
     .post-btn {
       font-size: 0.8rem;
     }
+    color: #fd7e14 !important;
+  }
+
+  p.card-text {
+    color: #000 !important;
+
+    small {
+      color: #000 !important;
+      font-size: 1.2rem !important;
+    }
   }
 }
 
 form {
   margin: 0 auto;
   .btn-login {
-    background: #FC2F07;
-    color: #FAE0DE;
+    background: #faf7f7;
+    color: #000000;
     font-size: 1.4rem;
   }
 }
 
 .main {
-  background: #FAE0DE;
+  background: #C83325;
   padding-bottom: 10px;
   height: auto;
+
+  p {
+    color: #FFFFFE;
+  }
 }
 
 @media screen  and (min-width: 768px){

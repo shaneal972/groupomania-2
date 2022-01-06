@@ -18,7 +18,7 @@
         </div>
         </form><!-- Fin de form -->
       </div><!-- Fin du main -->
-      <footer class="row main">
+      <footer class="row main col-md-8 offset-md-2">
         <p class="text-center">
           &copy; - ShanDev 2021
         </p>

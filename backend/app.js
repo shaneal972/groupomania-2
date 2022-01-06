@@ -1,24 +1,26 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-const query = require('./utils/query.js');
+const helmet = require('helmet');
+const rateLimit = require("express-rate-limit");
 
 // Création de l'application express
 const app = express();
 
+// Configuration d'un limiter 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // Chaque adresse IP est limitée à 100 requêtes par fenêtre.
+});
+
 // Sécurisation attaque de brute force
+app.use(limiter);
 
 // Sécurisation de quelques failles de sécurité
-
-
-// Sécurisation de l'attaque brute-force
+app.use(helmet());
 
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
-
-//Connection à la base de donnée Mysql
-
 
 // Mes middleware
 // app.use(express.urlencoded({extended: true}));

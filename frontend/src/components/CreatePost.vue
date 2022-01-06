@@ -4,6 +4,13 @@
       <img @click="$router.push('/')" class="w-75 logo" alt="Groupomania logo" src="../assets/icon-left-font.svg">
     </header><!-- Fin du header -->
     <div class="main row pt-2 col-md-8 offset-md-2">
+      <section class="header row justify-content-center">
+        <!-- <div class="break mb-3"></div> -->
+        <router-link :to="{name: 'posts'}" title="Retour vers l'accueil du site" class="mb-2 w-50 shan-bg text-opacity-75 text-decoration-none">
+          Accueil
+        </router-link>
+        <div class="break mb-3"></div>
+      </section>
         <p class="text-start fz-9">
             Vous avez quelque chose à partager pour enrichir et animer notre forum. <br>
             Alors faîtes-le en remplissant tous les champs de ce formulaire.
@@ -22,7 +29,7 @@
             </div>
         </form><!-- Fin de form -->
     </div><!-- Fin du main -->
-    <footer class="row main">
+    <footer class="row main col-md-8 offset-md-2">
       <p class="text-center">
         &copy; - ShanDev 2021
       </p>
