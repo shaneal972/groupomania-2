@@ -166,7 +166,7 @@ export default {
         return JSON.parse(localStorage.getItem('authUser')).user;
       }
     },
-    // Vérifie que l'id de l'utilisateur qui a posté l'article est celui qui est connecté
+    // Vérifie que l'id de l'utilisateur qui a posté l'article est celui qui lit l'article
     verifUserPosted(){
       this.idConnected = this.getUserStore.id;
       return this.idConnected === this.post.userId ? true : false;

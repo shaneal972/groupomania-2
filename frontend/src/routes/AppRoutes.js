@@ -33,7 +33,7 @@ let router = new VueRouter({
             name: 'read-post'
         },
         {
-            path: '/posts/:id',
+            path: `/posts/:id`,
             component: require('../components/UpdatePost.vue').default,
             name: 'update-post'
         },

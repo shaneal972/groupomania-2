@@ -69,7 +69,7 @@ export default {
       
       const accessToken = this.getToken();
       const userId = this.getUserId();
-
+      
       const title = this.title;
       const content = this.content;
       

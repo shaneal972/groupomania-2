@@ -95,11 +95,13 @@ exports.getOnePost = async (req, res, next) => {
  * @param {*} next 
  */
 exports.updatePost = async (req, res, next) => {
-    // Récupération de l'id 
-    const id = req.body.id;
+    // Récupération de l'id du post
+    const title = JSON.parse(req.body.title);
+    const id = title.id;
+    console.log(id);
     // Récupération des nouvelles informations du post
     const postToUpdate = {
-        title: req.body.title,
+        title: title.title,
         content: req.body.content
     }
     // Vérification que le post est dans la bdd, 
